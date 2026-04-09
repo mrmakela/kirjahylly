@@ -10,24 +10,42 @@
     .app { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 3rem; }
 
     .header { margin-bottom: 2.5rem; }
-    .header-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
     .header h1 { font-size: 26px; font-weight: 500; letter-spacing: -0.5px; }
-    .conn-row { display: flex; align-items: center; gap: 8px; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+
+    /* Sheets connection */
     .conn-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #666; cursor: pointer; padding: 5px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #f5f5f5; white-space: nowrap; }
     .conn-dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: background 0.3s; }
     .conn-dot.ok { background: #639922; }
     .conn-dot.err { background: #E24B4A; }
     .conn-dot.loading { background: #EF9F27; }
-    .conn-panel { flex: 1; display: none; gap: 6px; margin-top: 8px; }
+    .conn-panel { display: none; gap: 6px; margin-top: 8px; }
     .conn-panel.open { display: flex; }
     .conn-panel input { flex: 1; font-size: 13px; border: 0.5px solid #ccc; border-radius: 8px; padding: 6px 10px; min-width: 0; font-family: inherit; }
     .conn-panel button { font-size: 12px; padding: 6px 12px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; white-space: nowrap; }
     .conn-panel button:hover { background: #f5f5f5; }
-    .sync-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .sync-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
     .sync-status { font-size: 12px; color: #888; }
     .sync-btn { font-size: 12px; padding: 4px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: none; color: #666; cursor: pointer; font-family: inherit; }
     .sync-btn:hover { background: #f5f5f5; }
+    .pending-badge { display: inline-block; font-size: 11px; background: #FAEEDA; color: #854F0B; padding: 1px 7px; border-radius: 10px; }
 
+    /* Tools dropdown */
+    .tools-wrap { position: relative; }
+    .tools-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #666; cursor: pointer; padding: 5px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #f5f5f5; white-space: nowrap; font-family: inherit; }
+    .tools-btn:hover { background: #eee; }
+    .tools-btn svg { width: 12px; height: 12px; transition: transform 0.15s; }
+    .tools-btn.open svg { transform: rotate(180deg); }
+    .tools-menu { position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 0.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); min-width: 200px; z-index: 50; padding: 6px; display: none; }
+    .tools-menu.open { display: block; }
+    .tools-section { font-size: 10px; color: #aaa; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 10px 4px; }
+    .tools-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #111; padding: 7px 10px; border-radius: 7px; cursor: pointer; width: 100%; background: none; border: none; font-family: inherit; text-align: left; }
+    .tools-item:hover { background: #f5f5f5; }
+    .tools-item svg { width: 14px; height: 14px; color: #888; flex-shrink: 0; }
+    .tools-divider { height: 0.5px; background: #eee; margin: 4px 0; }
+
+    /* Toolbar */
     .toolbar { display: flex; gap: 10px; margin-bottom: 1.25rem; align-items: center; }
     .search-wrap { position: relative; flex: 1; }
     .search-wrap svg.ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: #888; pointer-events: none; }
@@ -39,6 +57,7 @@
     .add-fab:hover { opacity: 0.85; }
     .add-fab svg { width: 14px; height: 14px; }
 
+    /* Filters */
     .filter-row { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
     .filter-chip { font-size: 12px; padding: 5px 12px; border: 0.5px solid #ddd; border-radius: 20px; background: none; color: #666; cursor: pointer; font-family: inherit; white-space: nowrap; }
     .filter-chip:hover { border-color: #bbb; color: #111; }
@@ -46,13 +65,7 @@
     .filter-sep { width: 0.5px; height: 16px; background: #ddd; margin: 0 2px; }
     .result-count { font-size: 12px; color: #888; margin-left: auto; }
 
-    .io-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; padding: 10px 14px; background: #f9f9f9; border: 0.5px solid #e5e5e5; border-radius: 12px; flex-wrap: wrap; }
-    .io-label { font-size: 12px; color: #888; margin-right: 2px; }
-    .io-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 11px; border: 0.5px solid #ddd; border-radius: 20px; background: #fff; color: #111; cursor: pointer; font-family: inherit; white-space: nowrap; }
-    .io-btn:hover { background: #f5f5f5; border-color: #bbb; }
-    .io-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-    .io-sep { width: 0.5px; height: 16px; background: #e5e5e5; }
-
+    /* Modals */
     .modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
     .modal { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto; }
     .modal h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
@@ -72,6 +85,7 @@
     .drop-zone:hover, .drop-zone.over { border-color: #999; background: #f9f9f9; color: #111; }
     .drop-zone input { display: none; }
 
+    /* Form */
     .form-card { background: #f9f9f9; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; }
     .form-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
@@ -83,6 +97,7 @@
     .save-msg { font-size: 12px; color: #639922; margin-right: auto; }
     .save-msg.err { color: #E24B4A; }
 
+    /* Books */
     .book-list { display: flex; flex-direction: column; }
     .book-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 0.5px solid #eee; }
     .book-item:last-child { border-bottom: none; }
@@ -114,8 +129,6 @@
     .stat-row { display: flex; gap: 20px; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid #eee; flex-wrap: wrap; }
     .stat-num { font-size: 20px; font-weight: 500; letter-spacing: -0.3px; }
     .stat-label { font-size: 11px; color: #888; }
-
-    .pending-badge { display: inline-block; font-size: 11px; background: #FAEEDA; color: #854F0B; padding: 1px 7px; border-radius: 10px; margin-left: 6px; }
   </style>
 </head>
 <body>
@@ -124,16 +137,49 @@
   <div class="header">
     <div class="header-top">
       <h1>Kirjahylly</h1>
-      <div class="conn-indicator" onclick="toggleConn()">
-        <div class="conn-dot" id="connDot"></div>
-        <span id="connLabel">Yhdistä Sheetsiin</span>
+      <div class="header-right">
+        <!-- Tools dropdown -->
+        <div class="tools-wrap">
+          <button class="tools-btn" id="toolsBtn" onclick="toggleTools()">
+            Työkalut
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>
+          </button>
+          <div class="tools-menu" id="toolsMenu">
+            <div class="tools-section">Tuo</div>
+            <button class="tools-item" onclick="openImportCSV();closeTools()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+              Tuo CSV-tiedosto
+            </button>
+            <button class="tools-item" onclick="openImportJSON();closeTools()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h2M5 8h4M5 10h3"/></svg>
+              Tuo JSON
+            </button>
+            <div class="tools-divider"></div>
+            <div class="tools-section">Vie</div>
+            <button class="tools-item" onclick="exportCSV();closeTools()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12V4M5 7l3-3 3 3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+              Lataa CSV
+            </button>
+            <button class="tools-item" onclick="exportJSON();closeTools()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h2M5 8h4M5 10h3"/></svg>
+              Lataa JSON
+            </button>
+            <button class="tools-item" id="copyItem" onclick="copyCSV()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3h8"/></svg>
+              Kopioi CSV leikepöydälle
+            </button>
+          </div>
+        </div>
+        <!-- Sheets connection -->
+        <div class="conn-indicator" onclick="toggleConn()">
+          <div class="conn-dot" id="connDot"></div>
+          <span id="connLabel">Yhdistä Sheetsiin</span>
+        </div>
       </div>
     </div>
-    <div class="conn-row">
-      <div class="conn-panel" id="connPanel">
-        <input type="text" id="urlInput" placeholder="Apps Script Web App URL..." />
-        <button onclick="saveUrl()">Yhdistä</button>
-      </div>
+    <div class="conn-panel" id="connPanel">
+      <input type="text" id="urlInput" placeholder="Apps Script Web App URL..." />
+      <button onclick="saveUrl()">Yhdistä</button>
     </div>
     <div class="sync-row" id="syncRow" style="display:none;">
       <span class="sync-status" id="syncStatus"></span>
@@ -168,32 +214,6 @@
     <button class="filter-chip" onclick="setFilter('haluaa',this)">Haluaa lukea</button>
     <div class="filter-sep"></div>
     <span class="result-count" id="resultCount"></span>
-  </div>
-
-  <div class="io-bar">
-    <span class="io-label">Tiedosto:</span>
-    <button class="io-btn" onclick="openImportCSV()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
-      Tuo CSV
-    </button>
-    <button class="io-btn" onclick="exportCSV()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12V4M5 7l3-3 3 3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
-      Vie CSV
-    </button>
-    <div class="io-sep"></div>
-    <button class="io-btn" onclick="exportJSON()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h2M5 8h4M5 10h3"/></svg>
-      Vie JSON
-    </button>
-    <button class="io-btn" onclick="openImportJSON()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h2M5 8h4M5 10h3"/></svg>
-      Tuo JSON
-    </button>
-    <div class="io-sep"></div>
-    <button class="io-btn" id="copyBtn" onclick="copyCSV()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3h8"/></svg>
-      Kopioi CSV
-    </button>
   </div>
 
   <div class="form-card" id="addForm" style="display:none;">
@@ -274,7 +294,7 @@
 const LABELS = { luettu:'Luettu', kuunneltu:'Kuunneltu', kesken:'Kesken', haluaa:'Haluaa lukea' };
 const VALID_STATUS = ['luettu','kuunneltu','kesken','haluaa'];
 let books = [], currentFilter = 'kaikki', searchQuery = '', scriptUrl = '', editingId = null;
-let pendingOps = []; // queue for offline operations
+let pendingOps = [];
 
 function init() {
   scriptUrl = localStorage.getItem('kirjahylly_url') || '';
@@ -289,19 +309,37 @@ function init() {
     document.getElementById('syncRow').style.display = 'flex';
     syncNow();
   }
+  // Close tools menu when clicking outside
+  document.addEventListener('click', e => {
+    if (!document.getElementById('toolsBtn').contains(e.target) &&
+        !document.getElementById('toolsMenu').contains(e.target)) {
+      closeTools();
+    }
+  });
   render();
 }
 
 function persist() { localStorage.setItem('kirjahylly_books', JSON.stringify(books)); }
 function persistPending() { localStorage.setItem('kirjahylly_pending', JSON.stringify(pendingOps)); }
 
-/* ── Connection ── */
-function toggleConn() {
-  document.getElementById('connPanel').classList.toggle('open');
+/* ── Tools dropdown ── */
+function toggleTools() {
+  const btn = document.getElementById('toolsBtn');
+  const menu = document.getElementById('toolsMenu');
+  const isOpen = menu.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  menu.classList.toggle('open', !isOpen);
 }
+function closeTools() {
+  document.getElementById('toolsBtn').classList.remove('open');
+  document.getElementById('toolsMenu').classList.remove('open');
+}
+
+/* ── Connection ── */
+function toggleConn() { document.getElementById('connPanel').classList.toggle('open'); }
 function updateConn(state, label) {
   const dot = document.getElementById('connDot');
-  dot.className = 'conn-dot' + (state === 'ok' ? ' ok' : state === 'err' ? ' err' : state === 'loading' ? ' loading' : '');
+  dot.className = 'conn-dot' + (state==='ok'?' ok':state==='err'?' err':state==='loading'?' loading':'');
   document.getElementById('connLabel').textContent = label;
 }
 function saveUrl() {
@@ -318,217 +356,218 @@ function saveUrl() {
   }
 }
 
-/* ── Sheets API via GET (avoids CORS issues with POST) ── */
+/* ── Sheets API (GET only, avoids CORS) ── */
 async function sheetsGet(params) {
   const url = scriptUrl + '?' + new URLSearchParams(params).toString();
   const r = await fetch(url);
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
 }
-
 async function syncNow() {
   if (!scriptUrl) return;
   setSyncStatus('Synkronoidaan...');
   try {
-    // First flush pending ops
     await flushPending();
-    // Then fetch all books from Sheets
     const data = await sheetsGet({ action: 'getBooks' });
     if (data.books) {
       books = data.books;
-      persist();
-      render();
+      persist(); render();
       setSyncStatus('Synkronoitu ' + fmtTime(new Date()));
       updateConn('ok', 'Sheets yhdistetty');
-    } else {
-      throw new Error('Virheellinen vastaus');
-    }
+    } else throw new Error();
   } catch(e) {
-    setSyncStatus('Yhteys epäonnistui – käytetään paikallista dataa');
+    setSyncStatus('Yhteys epäonnistui – paikallinen data käytössä');
     updateConn('err', 'Yhteysongelma');
   }
 }
-
 async function flushPending() {
   if (!pendingOps.length) return;
   const remaining = [];
   for (const op of pendingOps) {
-    try {
-      await sheetsGet(op);
-    } catch(e) {
-      remaining.push(op);
-    }
+    try { await sheetsGet(op); } catch(e) { remaining.push(op); }
   }
-  pendingOps = remaining;
-  persistPending();
-  updatePendingBadge();
+  pendingOps = remaining; persistPending(); updatePendingBadge();
 }
-
-function setSyncStatus(msg) {
-  document.getElementById('syncStatus').textContent = msg;
-}
+function setSyncStatus(msg) { document.getElementById('syncStatus').textContent = msg; }
 function updatePendingBadge() {
   const el = document.getElementById('pendingBadge');
   el.innerHTML = pendingOps.length > 0 ? `<span class="pending-badge">${pendingOps.length} odottaa</span>` : '';
 }
-function fmtTime(d) {
-  return d.toLocaleTimeString('fi-FI', { hour:'2-digit', minute:'2-digit' });
-}
+function fmtTime(d) { return d.toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}); }
 
-/* ── Sheets operations (all via GET params) ── */
 async function sheetsSave(book, isUpdate) {
-  const op = {
-    action: isUpdate ? 'updateBook' : 'addBook',
-    id: book.id, title: book.title, author: book.author,
-    status: book.status, date: book.date, notes: book.notes, added: book.added
-  };
+  const op = { action: isUpdate?'updateBook':'addBook', id:book.id, title:book.title, author:book.author, status:book.status, date:book.date, notes:book.notes, added:book.added };
   if (!scriptUrl) { pendingOps.push(op); persistPending(); updatePendingBadge(); return false; }
-  try {
-    const d = await sheetsGet(op);
-    return d.success;
-  } catch(e) {
-    pendingOps.push(op);
-    persistPending();
-    updatePendingBadge();
-    return false;
-  }
+  try { const d = await sheetsGet(op); return d.success; }
+  catch(e) { pendingOps.push(op); persistPending(); updatePendingBadge(); return false; }
 }
-
 async function sheetsDelete(id) {
-  const op = { action: 'deleteBook', id };
+  const op = { action:'deleteBook', id };
   if (!scriptUrl) { pendingOps.push(op); persistPending(); updatePendingBadge(); return; }
-  try {
-    await sheetsGet(op);
-  } catch(e) {
-    pendingOps.push(op);
-    persistPending();
-    updatePendingBadge();
-  }
+  try { await sheetsGet(op); }
+  catch(e) { pendingOps.push(op); persistPending(); updatePendingBadge(); }
 }
 
 /* ── Search & filter ── */
-function onSearch(v) { searchQuery = v.trim().toLowerCase(); document.getElementById('clearBtn').className = 'clear-btn'+(v?' visible':''); render(); }
+function onSearch(v) { searchQuery=v.trim().toLowerCase(); document.getElementById('clearBtn').className='clear-btn'+(v?' visible':''); render(); }
 function clearSearch() { document.getElementById('searchInput').value=''; onSearch(''); }
 function setFilter(f,el) { currentFilter=f; document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active')); el.classList.add('active'); render(); }
 
 /* ── CSV utils ── */
+function bookToCSVRow(b) {
+  // Explicitly map each field — avoids missing/undefined issues
+  const fields = [
+    b.title  || '',
+    b.author || '',
+    b.status || '',
+    b.date   || '',   // fixed: was falling through as undefined
+    b.notes  || ''
+  ];
+  return fields.map(v => {
+    const s = String(v);
+    return (s.includes(',') || s.includes('"') || s.includes('\n'))
+      ? '"' + s.replace(/"/g, '""') + '"'
+      : s;
+  }).join(',');
+}
 function toCSV(arr) {
-  const h=['title','author','status','date','notes'];
-  const rows=arr.map(b=>h.map(k=>{const v=String(b[k]||'');return(v.includes(',')||v.includes('"')||v.includes('\n'))?'"'+v.replace(/"/g,'""')+'"':v;}).join(','));
-  return [h.join(','),...rows].join('\n');
+  const header = 'title,author,status,date,notes';
+  return [header, ...arr.map(bookToCSVRow)].join('\n');
 }
 function parseCSV(text) {
-  const lines=text.trim().split(/\r?\n/);
-  if(lines.length<2) return {books:[],errors:['Ei dataa.']};
-  const hdr=lines[0].split(',').map(h=>h.trim().toLowerCase());
-  const [ti,ai,si,di,ni]=['title','author','status','date','notes'].map(k=>hdr.indexOf(k));
-  if(ti===-1) return {books:[],errors:['Sarake "title" puuttuu.']};
-  const result=[],errors=[];
-  for(let i=1;i<lines.length;i++){
-    if(!lines[i].trim()) continue;
-    const c=splitRow(lines[i]);
-    const title=c[ti]||''; if(!title){errors.push(`Rivi ${i+1}: nimi puuttuu.`);continue;}
-    let status=si!==-1?(c[si]||'').toLowerCase():'haluaa';
-    if(!VALID_STATUS.includes(status)){errors.push(`Rivi ${i+1}: tila "${status}" → "haluaa".`);status='haluaa';}
-    result.push({id:Date.now().toString()+i,title,author:ai!==-1?c[ai]||'':'',status,date:di!==-1?c[di]||'':'',notes:ni!==-1?c[ni]||'':'',added:new Date().toISOString()});
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return {books:[], errors:['Ei dataa.']};
+  const hdr = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const [ti,ai,si,di,ni] = ['title','author','status','date','notes'].map(k => hdr.indexOf(k));
+  if (ti === -1) return {books:[], errors:['Sarake "title" puuttuu.']};
+  const result = [], errors = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const c = splitRow(lines[i]);
+    const title = c[ti] || '';
+    if (!title) { errors.push(`Rivi ${i+1}: nimi puuttuu.`); continue; }
+    let status = si !== -1 ? (c[si]||'').toLowerCase() : 'haluaa';
+    if (!VALID_STATUS.includes(status)) { errors.push(`Rivi ${i+1}: tila "${status}" → "haluaa".`); status = 'haluaa'; }
+    result.push({
+      id: Date.now().toString() + i,
+      title,
+      author: ai !== -1 ? c[ai] || '' : '',
+      status,
+      date:  di !== -1 ? c[di] || '' : '',
+      notes: ni !== -1 ? c[ni] || '' : '',
+      added: new Date().toISOString()
+    });
   }
-  return {books:result,errors};
+  return {books: result, errors};
 }
 function splitRow(row) {
-  const cols=[];let cur='',inQ=false;
-  for(let i=0;i<row.length;i++){const c=row[i];if(c==='"'){if(inQ&&row[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}else if(c===','&&!inQ){cols.push(cur);cur='';}else cur+=c;}
-  cols.push(cur);return cols;
+  const cols = []; let cur = '', inQ = false;
+  for (let i = 0; i < row.length; i++) {
+    const c = row[i];
+    if (c === '"') { if (inQ && row[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+    else if (c === ',' && !inQ) { cols.push(cur); cur = ''; }
+    else cur += c;
+  }
+  cols.push(cur); return cols;
 }
 
 /* ── Export ── */
-function exportCSV() { dl(toCSV(books),'kirjahylly.csv','text/csv'); }
-function exportJSON() { dl(JSON.stringify(books,null,2),'kirjahylly.json','application/json'); }
-function dl(content,name,type) { const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click(); }
+function exportCSV() { dl(toCSV(books), 'kirjahylly.csv', 'text/csv;charset=utf-8'); }
+function exportJSON() { dl(JSON.stringify(books, null, 2), 'kirjahylly.json', 'application/json'); }
+function dl(content, name, type) {
+  const bom = type.includes('csv') ? '\uFEFF' : ''; // BOM for Excel compatibility
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([bom + content], {type}));
+  a.download = name; a.click();
+}
 function copyCSV() {
-  navigator.clipboard.writeText(toCSV(books)).then(()=>{
-    const btn=document.getElementById('copyBtn');const orig=btn.innerHTML;
-    btn.textContent='Kopioitu!';setTimeout(()=>btn.innerHTML=orig,1600);
+  navigator.clipboard.writeText(toCSV(books)).then(() => {
+    const item = document.getElementById('copyItem');
+    const orig = item.innerHTML;
+    item.textContent = 'Kopioitu!';
+    setTimeout(() => { item.innerHTML = orig; closeTools(); }, 1400);
   });
 }
 
 /* ── Import CSV ── */
-function openImportCSV(){document.getElementById('csvTA').value='';document.getElementById('csvNote').textContent='';document.getElementById('csvNote').className='modal-note';document.getElementById('importCSVModal').style.display='flex';}
-function doDragOver(e){e.preventDefault();document.getElementById('dropZone').classList.add('over');}
-function doDragLeave(){document.getElementById('dropZone').classList.remove('over');}
-function doDrop(e){e.preventDefault();doDragLeave();const f=e.dataTransfer.files[0];if(f)readFile(f);}
-function fileSelected(e){if(e.target.files[0])readFile(e.target.files[0]);}
-function readFile(f){const r=new FileReader();r.onload=ev=>document.getElementById('csvTA').value=ev.target.result;r.readAsText(f,'UTF-8');}
-function doImportCSV(){
-  const text=document.getElementById('csvTA').value.trim();if(!text)return;
-  const {books:imp,errors}=parseCSV(text);
-  const note=document.getElementById('csvNote');
-  if(!imp.length&&errors.length){note.textContent=errors[0];note.className='modal-note err';return;}
-  const ex=new Set(books.map(b=>b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
-  const fresh=imp.filter(b=>!ex.has(b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
-  books=[...fresh,...books];persist();render();
-  // Queue all fresh books to Sheets
-  fresh.forEach(b=>sheetsSave(b,false));
-  note.className='modal-note ok';
-  note.textContent=`Tuotu ${fresh.length} kirjaa`+(imp.length-fresh.length>0?`, ${imp.length-fresh.length} duplikaattia ohitettu`:'')+'.';
-  setTimeout(()=>closeModal('importCSVModal'),1800);
+function openImportCSV() { document.getElementById('csvTA').value=''; document.getElementById('csvNote').textContent=''; document.getElementById('csvNote').className='modal-note'; document.getElementById('importCSVModal').style.display='flex'; }
+function doDragOver(e) { e.preventDefault(); document.getElementById('dropZone').classList.add('over'); }
+function doDragLeave() { document.getElementById('dropZone').classList.remove('over'); }
+function doDrop(e) { e.preventDefault(); doDragLeave(); const f=e.dataTransfer.files[0]; if(f) readFile(f); }
+function fileSelected(e) { if(e.target.files[0]) readFile(e.target.files[0]); }
+function readFile(f) { const r=new FileReader(); r.onload=ev=>document.getElementById('csvTA').value=ev.target.result; r.readAsText(f,'UTF-8'); }
+function doImportCSV() {
+  const text = document.getElementById('csvTA').value.trim(); if (!text) return;
+  const {books:imp, errors} = parseCSV(text);
+  const note = document.getElementById('csvNote');
+  if (!imp.length && errors.length) { note.textContent=errors[0]; note.className='modal-note err'; return; }
+  const ex = new Set(books.map(b => b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
+  const fresh = imp.filter(b => !ex.has(b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
+  books = [...fresh, ...books]; persist(); render();
+  fresh.forEach(b => sheetsSave(b, false));
+  note.className = 'modal-note ok';
+  note.textContent = `Tuotu ${fresh.length} kirjaa` + (imp.length-fresh.length > 0 ? `, ${imp.length-fresh.length} duplikaattia ohitettu` : '') + '.';
+  setTimeout(() => closeModal('importCSVModal'), 1800);
 }
 
 /* ── Import JSON ── */
-function openImportJSON(){document.getElementById('jsonTA').value='';document.getElementById('jsonNote').textContent='';document.getElementById('importJSONModal').style.display='flex';}
-function doImportJSON(){
-  const note=document.getElementById('jsonNote');
-  try{
-    const raw=JSON.parse(document.getElementById('jsonTA').value.trim());
-    const arr=Array.isArray(raw)?raw:[];
-    const ex=new Set(books.map(b=>b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
-    const fresh=arr.filter(b=>b.title&&!ex.has((b.title||'').toLowerCase()+'|'+(b.author||'').toLowerCase()))
-      .map(b=>({id:b.id||Date.now()+Math.random(),title:b.title,author:b.author||'',status:VALID_STATUS.includes(b.status)?b.status:'haluaa',date:b.date||'',notes:b.notes||'',added:b.added||new Date().toISOString()}));
-    books=[...fresh,...books];persist();render();
-    fresh.forEach(b=>sheetsSave(b,false));
-    note.className='modal-note ok';note.textContent=`Tuotu ${fresh.length} kirjaa`+(arr.length-fresh.length>0?`, ${arr.length-fresh.length} ohitettu`:'')+'.';
-    setTimeout(()=>closeModal('importJSONModal'),1800);
-  }catch(e){note.className='modal-note err';note.textContent='Virheellinen JSON.';}
+function openImportJSON() { document.getElementById('jsonTA').value=''; document.getElementById('jsonNote').textContent=''; document.getElementById('importJSONModal').style.display='flex'; }
+function doImportJSON() {
+  const note = document.getElementById('jsonNote');
+  try {
+    const raw = JSON.parse(document.getElementById('jsonTA').value.trim());
+    const arr = Array.isArray(raw) ? raw : [];
+    const ex = new Set(books.map(b => b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
+    const fresh = arr
+      .filter(b => b.title && !ex.has((b.title||'').toLowerCase()+'|'+(b.author||'').toLowerCase()))
+      .map(b => ({id: b.id||Date.now()+Math.random(), title:b.title, author:b.author||'', status:VALID_STATUS.includes(b.status)?b.status:'haluaa', date:b.date||'', notes:b.notes||'', added:b.added||new Date().toISOString()}));
+    books = [...fresh, ...books]; persist(); render();
+    fresh.forEach(b => sheetsSave(b, false));
+    note.className='modal-note ok';
+    note.textContent=`Tuotu ${fresh.length} kirjaa`+(arr.length-fresh.length>0?`, ${arr.length-fresh.length} ohitettu`:'')+'.';
+    setTimeout(()=>closeModal('importJSONModal'), 1800);
+  } catch(e) { note.className='modal-note err'; note.textContent='Virheellinen JSON.'; }
 }
 
-function closeModal(id){document.getElementById(id).style.display='none';}
-function bgClose(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function closeModal(id) { document.getElementById(id).style.display='none'; }
+function bgClose(e,id) { if(e.target===document.getElementById(id)) closeModal(id); }
 
 /* ── Render ── */
-function highlight(text,q){
-  if(!q||!text)return esc(text||'');
-  const idx=text.toLowerCase().indexOf(q);if(idx===-1)return esc(text);
+function highlight(text, q) {
+  if (!q||!text) return esc(text||'');
+  const idx = text.toLowerCase().indexOf(q); if(idx===-1) return esc(text);
   return esc(text.slice(0,idx))+'<mark>'+esc(text.slice(idx,idx+q.length))+'</mark>'+highlight(text.slice(idx+q.length),q);
 }
-function getFiltered(){
-  return books.filter(b=>{
-    if(currentFilter!=='kaikki'&&b.status!==currentFilter)return false;
-    if(!searchQuery)return true;
-    return(b.title||'').toLowerCase().includes(searchQuery)||(b.author||'').toLowerCase().includes(searchQuery)||(b.notes||'').toLowerCase().includes(searchQuery);
+function getFiltered() {
+  return books.filter(b => {
+    if (currentFilter!=='kaikki' && b.status!==currentFilter) return false;
+    if (!searchQuery) return true;
+    return (b.title||'').toLowerCase().includes(searchQuery)||(b.author||'').toLowerCase().includes(searchQuery)||(b.notes||'').toLowerCase().includes(searchQuery);
   });
 }
-function render(){
-  const filtered=getFiltered();
-  document.getElementById('statRow').innerHTML=
-    ['luettu','kuunneltu','kesken','haluaa'].map(s=>`<div class="stat"><div class="stat-num">${books.filter(b=>b.status===s).length}</div><div class="stat-label">${LABELS[s]}</div></div>`).join('')+
+function render() {
+  const filtered = getFiltered();
+  document.getElementById('statRow').innerHTML =
+    ['luettu','kuunneltu','kesken','haluaa'].map(s=>`<div class="stat"><div class="stat-num">${books.filter(b=>b.status===s).length}</div><div class="stat-label">${LABELS[s]}</div></div>`).join('') +
     `<div class="stat" style="margin-left:auto;text-align:right;"><div class="stat-num">${books.length}</div><div class="stat-label">yhteensä</div></div>`;
-  const rc=document.getElementById('resultCount');
-  rc.textContent=searchQuery?`${filtered.length} tulosta`:currentFilter!=='kaikki'?`${filtered.length} kirjaa`:'';
-  const list=document.getElementById('bookList');
-  if(!filtered.length){
-    list.innerHTML=`<div class="empty"><div class="empty-title">${searchQuery?`Ei tuloksia haulle "${esc(searchQuery)}"`:currentFilter!=='kaikki'?'Ei kirjoja tässä kategoriassa':'Hylly on tyhjä'}</div><div class="empty-sub">${searchQuery?'Kokeile eri hakusanaa.':'Lisää ensimmäinen kirja tai tuo CSV/JSON.'}</div></div>`;
+  const rc = document.getElementById('resultCount');
+  rc.textContent = searchQuery ? `${filtered.length} tulosta` : currentFilter!=='kaikki' ? `${filtered.length} kirjaa` : '';
+  const list = document.getElementById('bookList');
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-title">${searchQuery?`Ei tuloksia haulle "${esc(searchQuery)}"`:currentFilter!=='kaikki'?'Ei kirjoja tässä kategoriassa':'Hylly on tyhjä'}</div><div class="empty-sub">${searchQuery?'Kokeile eri hakusanaa.':'Lisää ensimmäinen kirja tai tuo CSV/JSON Työkalut-valikosta.'}</div></div>`;
     return;
   }
-  list.innerHTML=filtered.map(b=>`
+  list.innerHTML = filtered.map(b => `
     <div class="book-item">
       <div class="book-spine ${b.status}"></div>
       <div class="book-body">
-        <div class="book-title">${highlight(b.title,searchQuery)}</div>
-        ${b.author?`<div class="book-author">${highlight(b.author,searchQuery)}</div>`:''}
+        <div class="book-title">${highlight(b.title, searchQuery)}</div>
+        ${b.author ? `<div class="book-author">${highlight(b.author, searchQuery)}</div>` : ''}
         <div class="book-footer">
           <span class="status-tag ${b.status}">${LABELS[b.status]}</span>
-          ${b.date?`<span class="book-date">${fmtDate(b.date)}</span>`:''}
+          ${b.date ? `<span class="book-date">${fmtDate(b.date)}</span>` : ''}
         </div>
-        ${b.notes?`<div class="book-notes">${highlight(b.notes,searchQuery)}</div>`:''}
+        ${b.notes ? `<div class="book-notes">${highlight(b.notes, searchQuery)}</div>` : ''}
       </div>
       <div class="book-actions">
         <button class="icon-btn" title="Muokkaa" onclick="startEdit('${b.id}')">
@@ -542,9 +581,9 @@ function render(){
 }
 
 /* ── Form ── */
-function toggleForm(){
-  const f=document.getElementById('addForm');
-  if(f.style.display!=='none'){f.style.display='none';editingId=null;return;}
+function toggleForm() {
+  const f = document.getElementById('addForm');
+  if (f.style.display!=='none') { f.style.display='none'; editingId=null; return; }
   editingId=null;
   document.getElementById('formTitle').textContent='Uusi kirja';
   document.getElementById('saveBtn').textContent='Tallenna';
@@ -552,10 +591,10 @@ function toggleForm(){
   document.getElementById('fStatus').value='luettu';
   document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
   document.getElementById('saveMsg').style.display='none';
-  f.style.display='block';document.getElementById('fTitle').focus();
+  f.style.display='block'; document.getElementById('fTitle').focus();
 }
-function startEdit(id){
-  const b=books.find(x=>x.id===id);if(!b)return;editingId=id;
+function startEdit(id) {
+  const b = books.find(x=>x.id===id); if(!b) return; editingId=id;
   document.getElementById('formTitle').textContent='Muokkaa kirjaa';
   document.getElementById('saveBtn').textContent='Päivitä';
   document.getElementById('fTitle').value=b.title;
@@ -567,31 +606,34 @@ function startEdit(id){
   document.getElementById('addForm').style.display='block';
   document.getElementById('addForm').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-async function saveBook(){
-  const title=document.getElementById('fTitle').value.trim();if(!title){document.getElementById('fTitle').focus();return;}
-  const isUpdate=!!editingId;
-  const book={id:editingId||Date.now().toString(),title,author:document.getElementById('fAuthor').value.trim(),status:document.getElementById('fStatus').value,date:document.getElementById('fDate').value,notes:document.getElementById('fNotes').value.trim(),added:isUpdate?(books.find(b=>b.id===editingId)||{}).added||new Date().toISOString():new Date().toISOString()};
-  books=isUpdate?books.map(b=>b.id===editingId?book:b):[book,...books];
-  persist();render();
-  const msg=document.getElementById('saveMsg');
-  const ok=await sheetsSave(book,isUpdate);
-  if(scriptUrl){
-    msg.textContent=ok?'Tallennettu Sheetsiin.':'Tallennettu paikallisesti, synkronoidaan myöhemmin.';
-    msg.className=ok?'save-msg':'save-msg err';
-  } else {
-    msg.textContent='Tallennettu paikallisesti.';msg.className='save-msg';
-  }
-  msg.style.display='block';editingId=null;
-  setTimeout(()=>{document.getElementById('addForm').style.display='none';},1400);
+async function saveBook() {
+  const title = document.getElementById('fTitle').value.trim(); if(!title){document.getElementById('fTitle').focus();return;}
+  const isUpdate = !!editingId;
+  const book = {
+    id: editingId||Date.now().toString(), title,
+    author: document.getElementById('fAuthor').value.trim(),
+    status: document.getElementById('fStatus').value,
+    date:   document.getElementById('fDate').value,
+    notes:  document.getElementById('fNotes').value.trim(),
+    added:  isUpdate ? (books.find(b=>b.id===editingId)||{}).added||new Date().toISOString() : new Date().toISOString()
+  };
+  books = isUpdate ? books.map(b=>b.id===editingId?book:b) : [book,...books];
+  persist(); render();
+  const msg = document.getElementById('saveMsg');
+  const ok = await sheetsSave(book, isUpdate);
+  msg.textContent = scriptUrl ? (ok?'Tallennettu Sheetsiin.':'Tallennettu paikallisesti, synkronoidaan myöhemmin.') : 'Tallennettu paikallisesti.';
+  msg.className = (scriptUrl && !ok) ? 'save-msg err' : 'save-msg';
+  msg.style.display='block'; editingId=null;
+  setTimeout(()=>{document.getElementById('addForm').style.display='none';}, 1400);
 }
-async function deleteBook(id){
-  if(!confirm('Poistetaanko kirja?'))return;
-  books=books.filter(b=>b.id!==id);persist();render();
+async function deleteBook(id) {
+  if (!confirm('Poistetaanko kirja?')) return;
+  books=books.filter(b=>b.id!==id); persist(); render();
   await sheetsDelete(id);
 }
 
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function fmtDate(d){if(!d)return'';const[y,m,dd]=d.split('-');return`${dd}.${m}.${y}`;}
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtDate(d) { if(!d)return''; const[y,m,dd]=d.split('-'); return `${dd}.${m}.${y}`; }
 
 init();
 </script>

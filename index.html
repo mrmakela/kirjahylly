@@ -529,7 +529,7 @@ function getFiltered() {
     return (b.title||'').toLowerCase().includes(searchQuery) ||
            (b.author||'').toLowerCase().includes(searchQuery) ||
            (b.notes||'').toLowerCase().includes(searchQuery);
-  });
+  }).sort(function(a,b){ return (a.title||'').localeCompare(b.title||'', 'fi'); });
 }
 
 function render() {

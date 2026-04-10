@@ -14,7 +14,6 @@
     .header h1 { font-size: 26px; font-weight: 500; letter-spacing: -0.5px; }
     .header-right { display: flex; align-items: center; gap: 8px; }
 
-    /* Sheets connection */
     .conn-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #666; cursor: pointer; padding: 5px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #f5f5f5; white-space: nowrap; }
     .conn-dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: background 0.3s; }
     .conn-dot.ok { background: #639922; }
@@ -31,7 +30,6 @@
     .sync-btn:hover { background: #f5f5f5; }
     .pending-badge { display: inline-block; font-size: 11px; background: #FAEEDA; color: #854F0B; padding: 1px 7px; border-radius: 10px; }
 
-    /* Tools dropdown */
     .tools-wrap { position: relative; }
     .tools-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #666; cursor: pointer; padding: 5px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #f5f5f5; white-space: nowrap; font-family: inherit; }
     .tools-btn:hover { background: #eee; }
@@ -45,7 +43,6 @@
     .tools-item svg { width: 14px; height: 14px; color: #888; flex-shrink: 0; }
     .tools-divider { height: 0.5px; background: #eee; margin: 4px 0; }
 
-    /* Toolbar */
     .toolbar { display: flex; gap: 10px; margin-bottom: 1.25rem; align-items: center; }
     .search-wrap { position: relative; flex: 1; }
     .search-wrap svg.ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: #888; pointer-events: none; }
@@ -57,15 +54,16 @@
     .add-fab:hover { opacity: 0.85; }
     .add-fab svg { width: 14px; height: 14px; }
 
-    /* Filters */
-    .filter-row { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .filter-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; align-items: center; }
+    .filter-row-year { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; min-height: 28px; }
     .filter-chip { font-size: 12px; padding: 5px 12px; border: 0.5px solid #ddd; border-radius: 20px; background: none; color: #666; cursor: pointer; font-family: inherit; white-space: nowrap; }
     .filter-chip:hover { border-color: #bbb; color: #111; }
     .filter-chip.active { background: #111; color: #fff; border-color: #111; }
+    .filter-chip.year-active { background: #378ADD; color: #fff; border-color: #378ADD; }
     .filter-sep { width: 0.5px; height: 16px; background: #ddd; margin: 0 2px; }
+    .filter-label { font-size: 11px; color: #aaa; font-weight: 500; letter-spacing: 0.3px; }
     .result-count { font-size: 12px; color: #888; margin-left: auto; }
 
-    /* Modals */
     .modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
     .modal { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto; }
     .modal h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
@@ -85,7 +83,6 @@
     .drop-zone:hover, .drop-zone.over { border-color: #999; background: #f9f9f9; color: #111; }
     .drop-zone input { display: none; }
 
-    /* Form */
     .form-card { background: #f9f9f9; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; }
     .form-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
@@ -97,7 +94,6 @@
     .save-msg { font-size: 12px; color: #639922; margin-right: auto; }
     .save-msg.err { color: #E24B4A; }
 
-    /* Books */
     .book-list { display: flex; flex-direction: column; }
     .book-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 0.5px solid #eee; }
     .book-item:last-child { border-bottom: none; }
@@ -117,6 +113,7 @@
     .status-tag.kesken { background: #FAEEDA; color: #854F0B; }
     .status-tag.haluaa { background: #F1EFE8; color: #5F5E5A; }
     .book-date { font-size: 12px; color: #888; }
+    .book-extra { font-size: 12px; color: #aaa; }
     .book-notes { font-size: 13px; color: #666; margin-top: 8px; line-height: 1.55; }
     .book-actions { display: flex; gap: 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
     .book-item:hover .book-actions { opacity: 1; }
@@ -138,7 +135,6 @@
     <div class="header-top">
       <h1>Kirjahylly</h1>
       <div class="header-right">
-        <!-- Tools dropdown -->
         <div class="tools-wrap">
           <button class="tools-btn" id="toolsBtn" onclick="toggleTools()">
             Työkalut
@@ -170,7 +166,6 @@
             </button>
           </div>
         </div>
-        <!-- Sheets connection -->
         <div class="conn-indicator" onclick="toggleConn()">
           <div class="conn-dot" id="connDot"></div>
           <span id="connLabel">Yhdistä Sheetsiin</span>
@@ -206,6 +201,7 @@
     </button>
   </div>
 
+  <!-- Status filter -->
   <div class="filter-row">
     <button class="filter-chip active" onclick="setFilter('kaikki',this)">Kaikki</button>
     <button class="filter-chip" onclick="setFilter('luettu',this)">Luettu</button>
@@ -216,6 +212,10 @@
     <span class="result-count" id="resultCount"></span>
   </div>
 
+  <!-- Year filter -->
+  <div class="filter-row-year" id="yearFilterRow"></div>
+
+  <!-- Add/edit form -->
   <div class="form-card" id="addForm" style="display:none;">
     <h3 id="formTitle">Uusi kirja</h3>
     <div class="form-grid">
@@ -229,7 +229,7 @@
       </div>
       <div class="form-row">
         <label>Tila</label>
-        <select id="fStatus">
+        <select id="fStatus" onchange="onStatusChange()">
           <option value="luettu">Luettu</option>
           <option value="kuunneltu">Kuunneltu</option>
           <option value="kesken">Kesken</option>
@@ -238,7 +238,15 @@
       </div>
       <div class="form-row" style="grid-column:1/-1;">
         <label>Päivämäärä</label>
-        <input type="date" id="fDate" />
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="date" id="fDate" style="flex:1;" oninput="updateNoDateBtn()" />
+          <button type="button" id="noDateBtn" onclick="setNoDate()" style="font-size:12px;padding:6px 10px;border:0.5px solid #ddd;border-radius:8px;background:none;color:#666;cursor:pointer;font-family:inherit;white-space:nowrap;">Ei määritetty</button>
+        </div>
+      </div>
+      <!-- Pages / duration field — label changes based on status -->
+      <div class="form-row" style="grid-column:1/-1;" id="extraRow">
+        <label id="extraLabel">Sivumäärä</label>
+        <input type="text" id="fExtra" placeholder="" />
       </div>
       <div class="form-row" style="grid-column:1/-1;">
         <label>Muistiinpanot</label>
@@ -259,7 +267,7 @@
 <div class="modal-wrap" id="importCSVModal" style="display:none;" onclick="bgClose(event,'importCSVModal')">
   <div class="modal">
     <h3>Tuo CSV-tiedosto</h3>
-    <p class="modal-sub">Otsikkorivi: <code>title,author,status,date,notes</code><br>
+    <p class="modal-sub">Otsikkorivi: <code>title,author,status,date,extra,notes</code><br>
     Tila-arvot: <code>luettu</code>, <code>kuunneltu</code>, <code>kesken</code>, <code>haluaa</code><br>
     Duplikaatit (sama nimi + tekijä) ohitetaan automaattisesti.</p>
     <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="doDragOver(event)" ondragleave="doDragLeave()" ondrop="doDrop(event)">
@@ -281,7 +289,7 @@
   <div class="modal">
     <h3>Tuo JSON</h3>
     <p class="modal-sub">Liitä aiemmin viety JSON-sisältö alle.</p>
-    <textarea id="jsonTA" placeholder='[{"title":"Kirja","author":"Tekijä","status":"luettu","date":"2024-01-01","notes":""}]'></textarea>
+    <textarea id="jsonTA" placeholder='[{"title":"Kirja","author":"Tekijä","status":"luettu","date":"2024-01-01","extra":"320 s.","notes":""}]'></textarea>
     <div class="modal-actions">
       <span class="modal-note" id="jsonNote"></span>
       <button class="btn-secondary" onclick="closeModal('importJSONModal')">Peruuta</button>
@@ -290,11 +298,27 @@
   </div>
 </div>
 
+<!-- Duplicate warning modal -->
+<div class="modal-wrap" id="dupModal" style="display:none;">
+  <div class="modal" style="max-width:400px;">
+    <h3>Kirja on jo hyllyssä</h3>
+    <p class="modal-sub" id="dupModalMsg"></p>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeDupModal()">Peruuta</button>
+      <button class="btn-primary" onclick="confirmSaveAnyway()">Tallenna silti</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LABELS = { luettu:'Luettu', kuunneltu:'Kuunneltu', kesken:'Kesken', haluaa:'Haluaa lukea' };
 const VALID_STATUS = ['luettu','kuunneltu','kesken','haluaa'];
-let books = [], currentFilter = 'kaikki', searchQuery = '', scriptUrl = '', editingId = null;
-let pendingOps = [];
+// extra field label per status
+const EXTRA_LABELS = { luettu:'Sivumäärä', kuunneltu:'Kuunteluaika', kesken:'Sivumäärä', haluaa:'Sivumäärä' };
+const EXTRA_PLACEHOLDERS = { luettu:'esim. 320 s.', kuunneltu:'esim. 8 t 30 min', kesken:'esim. 450 s.', haluaa:'esim. 280 s.' };
+
+let books = [], currentFilter = 'kaikki', currentYear = null, searchQuery = '', scriptUrl = '', editingId = null;
+let pendingOps = [], pendingBook = null;
 
 function init() {
   scriptUrl = localStorage.getItem('kirjahylly_url') || '';
@@ -309,8 +333,7 @@ function init() {
     document.getElementById('syncRow').style.display = 'flex';
     syncNow();
   }
-  // Close tools menu when clicking outside
-  document.addEventListener('click', e => {
+  document.addEventListener('click', function(e) {
     if (!document.getElementById('toolsBtn').contains(e.target) &&
         !document.getElementById('toolsMenu').contains(e.target)) {
       closeTools();
@@ -322,7 +345,7 @@ function init() {
 function persist() { localStorage.setItem('kirjahylly_books', JSON.stringify(books)); }
 function persistPending() { localStorage.setItem('kirjahylly_pending', JSON.stringify(pendingOps)); }
 
-/* ── Tools dropdown ── */
+/* ── Tools ── */
 function toggleTools() {
   const btn = document.getElementById('toolsBtn');
   const menu = document.getElementById('toolsMenu');
@@ -356,7 +379,7 @@ function saveUrl() {
   }
 }
 
-/* ── Sheets API (GET only, avoids CORS) ── */
+/* ── Sheets (GET only) ── */
 async function sheetsGet(params) {
   const url = scriptUrl + '?' + new URLSearchParams(params).toString();
   const r = await fetch(url);
@@ -370,8 +393,7 @@ async function syncNow() {
     await flushPending();
     const data = await sheetsGet({ action: 'getBooks' });
     if (data.books) {
-      books = data.books;
-      persist(); render();
+      books = data.books; persist(); render();
       setSyncStatus('Synkronoitu ' + fmtTime(new Date()));
       updateConn('ok', 'Sheets yhdistetty');
     } else throw new Error();
@@ -391,12 +413,15 @@ async function flushPending() {
 function setSyncStatus(msg) { document.getElementById('syncStatus').textContent = msg; }
 function updatePendingBadge() {
   const el = document.getElementById('pendingBadge');
-  el.innerHTML = pendingOps.length > 0 ? `<span class="pending-badge">${pendingOps.length} odottaa</span>` : '';
+  el.innerHTML = pendingOps.length > 0 ? '<span class="pending-badge">' + pendingOps.length + ' odottaa</span>' : '';
 }
 function fmtTime(d) { return d.toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}); }
 
 async function sheetsSave(book, isUpdate) {
-  const op = { action: isUpdate?'updateBook':'addBook', id:book.id, title:book.title, author:book.author, status:book.status, date:book.date, notes:book.notes, added:book.added };
+  const op = { action: isUpdate?'updateBook':'addBook',
+    id:book.id, title:book.title, author:book.author,
+    status:book.status, date:book.date, extra:book.extra||'',
+    notes:book.notes, added:book.added };
   if (!scriptUrl) { pendingOps.push(op); persistPending(); updatePendingBadge(); return false; }
   try { const d = await sheetsGet(op); return d.success; }
   catch(e) { pendingOps.push(op); persistPending(); updatePendingBadge(); return false; }
@@ -409,52 +434,83 @@ async function sheetsDelete(id) {
 }
 
 /* ── Search & filter ── */
-function onSearch(v) { searchQuery=v.trim().toLowerCase(); document.getElementById('clearBtn').className='clear-btn'+(v?' visible':''); render(); }
+function onSearch(v) {
+  searchQuery = v.trim().toLowerCase();
+  document.getElementById('clearBtn').className = 'clear-btn' + (v ? ' visible' : '');
+  render();
+}
 function clearSearch() { document.getElementById('searchInput').value=''; onSearch(''); }
-function setFilter(f,el) { currentFilter=f; document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active')); el.classList.add('active'); render(); }
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+function setYearFilter(y) {
+  currentYear = currentYear === y ? null : y;
+  renderYearChips();
+  render();
+}
 
-/* ── CSV utils ── */
+/* ── Year chips (built from data) ── */
+function getYears() {
+  const years = new Set();
+  books.forEach(b => {
+    if (b.date) {
+      const m = String(b.date).match(/^(\d{4})/);
+      if (m) years.add(parseInt(m[1]));
+    }
+  });
+  return Array.from(years).sort((a,b) => b - a);
+}
+function renderYearChips() {
+  const years = getYears();
+  const row = document.getElementById('yearFilterRow');
+  if (!years.length) { row.innerHTML = ''; return; }
+  let html = '<span class="filter-label">Vuosi:</span>';
+  years.forEach(y => {
+    const active = currentYear === y;
+    html += '<button class="filter-chip' + (active ? ' year-active' : '') + '" onclick="setYearFilter(' + y + ')">' + y + '</button>';
+  });
+  if (currentYear) {
+    html += '<button class="filter-chip" onclick="setYearFilter(null)" style="color:#E24B4A;border-color:#f5c1c1;">Poista</button>';
+  }
+  row.innerHTML = html;
+}
+
+/* ── CSV ── */
 function bookToCSVRow(b) {
-  // Explicitly map each field — avoids missing/undefined issues
-  const fields = [
-    b.title  || '',
-    b.author || '',
-    b.status || '',
-    b.date   || '',   // fixed: was falling through as undefined
-    b.notes  || ''
-  ];
+  const fields = [b.title||'', b.author||'', b.status||'', b.date||'', b.extra||'', b.notes||''];
   return fields.map(v => {
     const s = String(v);
     return (s.includes(',') || s.includes('"') || s.includes('\n'))
-      ? '"' + s.replace(/"/g, '""') + '"'
-      : s;
+      ? '"' + s.replace(/"/g, '""') + '"' : s;
   }).join(',');
 }
 function toCSV(arr) {
-  const header = 'title,author,status,date,notes';
-  return [header, ...arr.map(bookToCSVRow)].join('\n');
+  return ['title,author,status,date,extra,notes', ...arr.map(bookToCSVRow)].join('\n');
 }
 function parseCSV(text) {
   const lines = text.trim().split(/\r?\n/);
   if (lines.length < 2) return {books:[], errors:['Ei dataa.']};
   const hdr = lines[0].split(',').map(h => h.trim().toLowerCase());
-  const [ti,ai,si,di,ni] = ['title','author','status','date','notes'].map(k => hdr.indexOf(k));
+  const idx = k => hdr.indexOf(k);
+  const [ti,ai,si,di,ei,ni] = ['title','author','status','date','extra','notes'].map(idx);
   if (ti === -1) return {books:[], errors:['Sarake "title" puuttuu.']};
   const result = [], errors = [];
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
     const c = splitRow(lines[i]);
     const title = c[ti] || '';
-    if (!title) { errors.push(`Rivi ${i+1}: nimi puuttuu.`); continue; }
+    if (!title) { errors.push('Rivi ' + (i+1) + ': nimi puuttuu.'); continue; }
     let status = si !== -1 ? (c[si]||'').toLowerCase() : 'haluaa';
-    if (!VALID_STATUS.includes(status)) { errors.push(`Rivi ${i+1}: tila "${status}" → "haluaa".`); status = 'haluaa'; }
+    if (!VALID_STATUS.includes(status)) { errors.push('Rivi ' + (i+1) + ': tuntematon tila.'); status = 'haluaa'; }
     result.push({
       id: Date.now().toString() + i,
-      title,
-      author: ai !== -1 ? c[ai] || '' : '',
-      status,
-      date:  di !== -1 ? c[di] || '' : '',
-      notes: ni !== -1 ? c[ni] || '' : '',
+      title, author: ai !== -1 ? c[ai]||'' : '',
+      status, date: di !== -1 ? c[di]||'' : '',
+      extra: ei !== -1 ? c[ei]||'' : '',
+      notes: ni !== -1 ? c[ni]||'' : '',
       added: new Date().toISOString()
     });
   }
@@ -475,163 +531,253 @@ function splitRow(row) {
 function exportCSV() { dl(toCSV(books), 'kirjahylly.csv', 'text/csv;charset=utf-8'); }
 function exportJSON() { dl(JSON.stringify(books, null, 2), 'kirjahylly.json', 'application/json'); }
 function dl(content, name, type) {
-  const bom = type.includes('csv') ? '\uFEFF' : ''; // BOM for Excel compatibility
+  const bom = type.includes('csv') ? '\uFEFF' : '';
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([bom + content], {type}));
   a.download = name; a.click();
 }
 function copyCSV() {
-  navigator.clipboard.writeText(toCSV(books)).then(() => {
+  navigator.clipboard.writeText(toCSV(books)).then(function() {
     const item = document.getElementById('copyItem');
     const orig = item.innerHTML;
     item.textContent = 'Kopioitu!';
-    setTimeout(() => { item.innerHTML = orig; closeTools(); }, 1400);
+    setTimeout(function() { item.innerHTML = orig; closeTools(); }, 1400);
   });
 }
 
 /* ── Import CSV ── */
-function openImportCSV() { document.getElementById('csvTA').value=''; document.getElementById('csvNote').textContent=''; document.getElementById('csvNote').className='modal-note'; document.getElementById('importCSVModal').style.display='flex'; }
+function openImportCSV() {
+  document.getElementById('csvTA').value = '';
+  document.getElementById('csvNote').textContent = '';
+  document.getElementById('csvNote').className = 'modal-note';
+  document.getElementById('importCSVModal').style.display = 'flex';
+}
 function doDragOver(e) { e.preventDefault(); document.getElementById('dropZone').classList.add('over'); }
 function doDragLeave() { document.getElementById('dropZone').classList.remove('over'); }
-function doDrop(e) { e.preventDefault(); doDragLeave(); const f=e.dataTransfer.files[0]; if(f) readFile(f); }
+function doDrop(e) { e.preventDefault(); doDragLeave(); const f = e.dataTransfer.files[0]; if(f) readFile(f); }
 function fileSelected(e) { if(e.target.files[0]) readFile(e.target.files[0]); }
-function readFile(f) { const r=new FileReader(); r.onload=ev=>document.getElementById('csvTA').value=ev.target.result; r.readAsText(f,'UTF-8'); }
+function readFile(f) { const r = new FileReader(); r.onload = function(ev) { document.getElementById('csvTA').value = ev.target.result; }; r.readAsText(f,'UTF-8'); }
 function doImportCSV() {
   const text = document.getElementById('csvTA').value.trim(); if (!text) return;
-  const {books:imp, errors} = parseCSV(text);
+  const result = parseCSV(text);
   const note = document.getElementById('csvNote');
-  if (!imp.length && errors.length) { note.textContent=errors[0]; note.className='modal-note err'; return; }
-  const ex = new Set(books.map(b => b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
-  const fresh = imp.filter(b => !ex.has(b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
+  if (!result.books.length && result.errors.length) { note.textContent = result.errors[0]; note.className = 'modal-note err'; return; }
+  const ex = new Set(books.map(b => b.title.toLowerCase() + '|' + (b.author||'').toLowerCase()));
+  const fresh = result.books.filter(b => !ex.has(b.title.toLowerCase() + '|' + (b.author||'').toLowerCase()));
   books = [...fresh, ...books]; persist(); render();
-  fresh.forEach(b => sheetsSave(b, false));
+  fresh.forEach(function(b) { sheetsSave(b, false); });
   note.className = 'modal-note ok';
-  note.textContent = `Tuotu ${fresh.length} kirjaa` + (imp.length-fresh.length > 0 ? `, ${imp.length-fresh.length} duplikaattia ohitettu` : '') + '.';
-  setTimeout(() => closeModal('importCSVModal'), 1800);
+  note.textContent = 'Tuotu ' + fresh.length + ' kirjaa' + (result.books.length - fresh.length > 0 ? ', ' + (result.books.length - fresh.length) + ' duplikaattia ohitettu' : '') + '.';
+  setTimeout(function() { closeModal('importCSVModal'); }, 1800);
 }
 
 /* ── Import JSON ── */
-function openImportJSON() { document.getElementById('jsonTA').value=''; document.getElementById('jsonNote').textContent=''; document.getElementById('importJSONModal').style.display='flex'; }
+function openImportJSON() {
+  document.getElementById('jsonTA').value = '';
+  document.getElementById('jsonNote').textContent = '';
+  document.getElementById('importJSONModal').style.display = 'flex';
+}
 function doImportJSON() {
   const note = document.getElementById('jsonNote');
   try {
     const raw = JSON.parse(document.getElementById('jsonTA').value.trim());
     const arr = Array.isArray(raw) ? raw : [];
-    const ex = new Set(books.map(b => b.title.toLowerCase()+'|'+(b.author||'').toLowerCase()));
+    const ex = new Set(books.map(b => b.title.toLowerCase() + '|' + (b.author||'').toLowerCase()));
     const fresh = arr
-      .filter(b => b.title && !ex.has((b.title||'').toLowerCase()+'|'+(b.author||'').toLowerCase()))
-      .map(b => ({id: b.id||Date.now()+Math.random(), title:b.title, author:b.author||'', status:VALID_STATUS.includes(b.status)?b.status:'haluaa', date:b.date||'', notes:b.notes||'', added:b.added||new Date().toISOString()}));
+      .filter(function(b) { return b.title && !ex.has((b.title||'').toLowerCase() + '|' + (b.author||'').toLowerCase()); })
+      .map(function(b) {
+        return { id: b.id || (Date.now() + Math.random()), title: b.title,
+          author: b.author||'', status: VALID_STATUS.includes(b.status) ? b.status : 'haluaa',
+          date: b.date||'', extra: b.extra||'', notes: b.notes||'',
+          added: b.added || new Date().toISOString() };
+      });
     books = [...fresh, ...books]; persist(); render();
-    fresh.forEach(b => sheetsSave(b, false));
-    note.className='modal-note ok';
-    note.textContent=`Tuotu ${fresh.length} kirjaa`+(arr.length-fresh.length>0?`, ${arr.length-fresh.length} ohitettu`:'')+'.';
-    setTimeout(()=>closeModal('importJSONModal'), 1800);
-  } catch(e) { note.className='modal-note err'; note.textContent='Virheellinen JSON.'; }
+    fresh.forEach(function(b) { sheetsSave(b, false); });
+    note.className = 'modal-note ok';
+    note.textContent = 'Tuotu ' + fresh.length + ' kirjaa' + (arr.length - fresh.length > 0 ? ', ' + (arr.length - fresh.length) + ' ohitettu' : '') + '.';
+    setTimeout(function() { closeModal('importJSONModal'); }, 1800);
+  } catch(e) { note.className = 'modal-note err'; note.textContent = 'Virheellinen JSON.'; }
 }
 
-function closeModal(id) { document.getElementById(id).style.display='none'; }
-function bgClose(e,id) { if(e.target===document.getElementById(id)) closeModal(id); }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function bgClose(e, id) { if(e.target === document.getElementById(id)) closeModal(id); }
 
 /* ── Render ── */
 function highlight(text, q) {
-  if (!q||!text) return esc(text||'');
-  const idx = text.toLowerCase().indexOf(q); if(idx===-1) return esc(text);
-  return esc(text.slice(0,idx))+'<mark>'+esc(text.slice(idx,idx+q.length))+'</mark>'+highlight(text.slice(idx+q.length),q);
+  if (!q || !text) return esc(text || '');
+  const idx = text.toLowerCase().indexOf(q);
+  if (idx === -1) return esc(text);
+  return esc(text.slice(0,idx)) + '<mark>' + esc(text.slice(idx, idx+q.length)) + '</mark>' + highlight(text.slice(idx+q.length), q);
 }
 function getFiltered() {
-  return books.filter(b => {
-    if (currentFilter!=='kaikki' && b.status!==currentFilter) return false;
+  return books.filter(function(b) {
+    if (currentFilter !== 'kaikki' && b.status !== currentFilter) return false;
+    if (currentYear) {
+      const m = b.date ? String(b.date).match(/^(\d{4})/) : null;
+      if (!m || parseInt(m[1]) !== currentYear) return false;
+    }
     if (!searchQuery) return true;
-    return (b.title||'').toLowerCase().includes(searchQuery)||(b.author||'').toLowerCase().includes(searchQuery)||(b.notes||'').toLowerCase().includes(searchQuery);
+    return (b.title||'').toLowerCase().includes(searchQuery) ||
+           (b.author||'').toLowerCase().includes(searchQuery) ||
+           (b.notes||'').toLowerCase().includes(searchQuery);
   });
 }
 function render() {
   const filtered = getFiltered();
   document.getElementById('statRow').innerHTML =
-    ['luettu','kuunneltu','kesken','haluaa'].map(s=>`<div class="stat"><div class="stat-num">${books.filter(b=>b.status===s).length}</div><div class="stat-label">${LABELS[s]}</div></div>`).join('') +
-    `<div class="stat" style="margin-left:auto;text-align:right;"><div class="stat-num">${books.length}</div><div class="stat-label">yhteensä</div></div>`;
+    ['luettu','kuunneltu','kesken','haluaa'].map(function(s) {
+      return '<div class="stat"><div class="stat-num">' + books.filter(function(b){return b.status===s;}).length + '</div><div class="stat-label">' + LABELS[s] + '</div></div>';
+    }).join('') +
+    '<div class="stat" style="margin-left:auto;text-align:right;"><div class="stat-num">' + books.length + '</div><div class="stat-label">yhteensä</div></div>';
+
   const rc = document.getElementById('resultCount');
-  rc.textContent = searchQuery ? `${filtered.length} tulosta` : currentFilter!=='kaikki' ? `${filtered.length} kirjaa` : '';
+  rc.textContent = searchQuery ? filtered.length + ' tulosta' : currentFilter !== 'kaikki' || currentYear ? filtered.length + ' kirjaa' : '';
+
+  renderYearChips();
+
   const list = document.getElementById('bookList');
   if (!filtered.length) {
-    list.innerHTML = `<div class="empty"><div class="empty-title">${searchQuery?`Ei tuloksia haulle "${esc(searchQuery)}"`:currentFilter!=='kaikki'?'Ei kirjoja tässä kategoriassa':'Hylly on tyhjä'}</div><div class="empty-sub">${searchQuery?'Kokeile eri hakusanaa.':'Lisää ensimmäinen kirja tai tuo CSV/JSON Työkalut-valikosta.'}</div></div>`;
+    list.innerHTML = '<div class="empty"><div class="empty-title">' +
+      (searchQuery ? 'Ei tuloksia haulle "' + esc(searchQuery) + '"' : currentFilter !== 'kaikki' || currentYear ? 'Ei kirjoja tässä suodatuksessa' : 'Hylly on tyhjä') +
+      '</div><div class="empty-sub">' +
+      (searchQuery ? 'Kokeile eri hakusanaa.' : 'Lisää ensimmäinen kirja tai tuo CSV/JSON Työkalut-valikosta.') +
+      '</div></div>';
     return;
   }
-  list.innerHTML = filtered.map(b => `
-    <div class="book-item">
-      <div class="book-spine ${b.status}"></div>
-      <div class="book-body">
-        <div class="book-title">${highlight(b.title, searchQuery)}</div>
-        ${b.author ? `<div class="book-author">${highlight(b.author, searchQuery)}</div>` : ''}
-        <div class="book-footer">
-          <span class="status-tag ${b.status}">${LABELS[b.status]}</span>
-          ${b.date ? `<span class="book-date">${fmtDate(b.date)}</span>` : ''}
-        </div>
-        ${b.notes ? `<div class="book-notes">${highlight(b.notes, searchQuery)}</div>` : ''}
-      </div>
-      <div class="book-actions">
-        <button class="icon-btn" title="Muokkaa" onclick="startEdit('${b.id}')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg>
-        </button>
-        <button class="icon-btn" title="Poista" onclick="deleteBook('${b.id}')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg>
-        </button>
-      </div>
-    </div>`).join('');
+  list.innerHTML = filtered.map(function(b) {
+    const extraLabel = EXTRA_LABELS[b.status] || 'Sivumäärä';
+    return '<div class="book-item">' +
+      '<div class="book-spine ' + b.status + '"></div>' +
+      '<div class="book-body">' +
+        '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +
+        (b.author ? '<div class="book-author">' + highlight(b.author, searchQuery) + '</div>' : '') +
+        '<div class="book-footer">' +
+          '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
+          (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
+          (b.extra ? '<span class="book-extra">' + esc(b.extra) + '</span>' : '') +
+        '</div>' +
+        (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
+      '</div>' +
+      '<div class="book-actions">' +
+        '<button class="icon-btn" title="Muokkaa" onclick="startEdit(\'' + b.id + '\')">' +
+          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg>' +
+        '</button>' +
+        '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\')">' +
+          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 }
 
 /* ── Form ── */
+function onStatusChange() {
+  const status = document.getElementById('fStatus').value;
+  document.getElementById('extraLabel').textContent = EXTRA_LABELS[status] || 'Sivumäärä';
+  document.getElementById('fExtra').placeholder = EXTRA_PLACEHOLDERS[status] || '';
+}
 function toggleForm() {
   const f = document.getElementById('addForm');
-  if (f.style.display!=='none') { f.style.display='none'; editingId=null; return; }
-  editingId=null;
-  document.getElementById('formTitle').textContent='Uusi kirja';
-  document.getElementById('saveBtn').textContent='Tallenna';
-  ['fTitle','fAuthor','fNotes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fStatus').value='luettu';
-  document.getElementById('fDate').value=new Date().toISOString().split('T')[0];
-  document.getElementById('saveMsg').style.display='none';
-  f.style.display='block'; document.getElementById('fTitle').focus();
+  if (f.style.display !== 'none') { f.style.display = 'none'; editingId = null; return; }
+  editingId = null;
+  document.getElementById('formTitle').textContent = 'Uusi kirja';
+  document.getElementById('saveBtn').textContent = 'Tallenna';
+  document.getElementById('fTitle').value = '';
+  document.getElementById('fAuthor').value = '';
+  document.getElementById('fStatus').value = 'luettu';
+  document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('fExtra').value = '';
+  document.getElementById('fNotes').value = '';
+  document.getElementById('saveMsg').style.display = 'none';
+  onStatusChange();
+  updateNoDateBtn();
+  f.style.display = 'block';
+  document.getElementById('fTitle').focus();
 }
 function startEdit(id) {
-  const b = books.find(x=>x.id===id); if(!b) return; editingId=id;
-  document.getElementById('formTitle').textContent='Muokkaa kirjaa';
-  document.getElementById('saveBtn').textContent='Päivitä';
-  document.getElementById('fTitle').value=b.title;
-  document.getElementById('fAuthor').value=b.author||'';
-  document.getElementById('fStatus').value=b.status;
-  document.getElementById('fDate').value=b.date||'';
-  document.getElementById('fNotes').value=b.notes||'';
-  document.getElementById('saveMsg').style.display='none';
-  document.getElementById('addForm').style.display='block';
-  document.getElementById('addForm').scrollIntoView({behavior:'smooth',block:'nearest'});
+  const b = books.find(function(x) { return x.id === id; });
+  if (!b) return;
+  editingId = id;
+  document.getElementById('formTitle').textContent = 'Muokkaa kirjaa';
+  document.getElementById('saveBtn').textContent = 'Päivitä';
+  document.getElementById('fTitle').value = b.title;
+  document.getElementById('fAuthor').value = b.author || '';
+  document.getElementById('fStatus').value = b.status;
+  document.getElementById('fDate').value = b.date || '';
+  document.getElementById('fExtra').value = b.extra || '';
+  document.getElementById('fNotes').value = b.notes || '';
+  document.getElementById('saveMsg').style.display = 'none';
+  onStatusChange();
+  updateNoDateBtn();
+  document.getElementById('addForm').style.display = 'block';
+  document.getElementById('addForm').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
-async function saveBook() {
-  const title = document.getElementById('fTitle').value.trim(); if(!title){document.getElementById('fTitle').focus();return;}
+function buildBook() {
   const isUpdate = !!editingId;
-  const book = {
-    id: editingId||Date.now().toString(), title,
+  return {
+    id: editingId || Date.now().toString(),
+    title: document.getElementById('fTitle').value.trim(),
     author: document.getElementById('fAuthor').value.trim(),
     status: document.getElementById('fStatus').value,
-    date:   document.getElementById('fDate').value,
-    notes:  document.getElementById('fNotes').value.trim(),
-    added:  isUpdate ? (books.find(b=>b.id===editingId)||{}).added||new Date().toISOString() : new Date().toISOString()
+    date: document.getElementById('fDate').value,
+    extra: document.getElementById('fExtra').value.trim(),
+    notes: document.getElementById('fNotes').value.trim(),
+    added: isUpdate ? ((books.find(function(b){return b.id===editingId;})||{}).added || new Date().toISOString()) : new Date().toISOString()
   };
-  books = isUpdate ? books.map(b=>b.id===editingId?book:b) : [book,...books];
+}
+async function saveBook() {
+  const title = document.getElementById('fTitle').value.trim();
+  if (!title) { document.getElementById('fTitle').focus(); return; }
+  const isUpdate = !!editingId;
+  if (!isUpdate) {
+    const dup = books.find(function(b) { return b.title.trim().toLowerCase() === title.toLowerCase(); });
+    if (dup) {
+      pendingBook = buildBook();
+      const author = dup.author ? ' (' + dup.author + ')' : '';
+      document.getElementById('dupModalMsg').textContent =
+        dup.title + author + ' on jo kirjahyllyssä tilassa "' + LABELS[dup.status] + '". Haluatko lisätä sen silti?';
+      document.getElementById('dupModal').style.display = 'flex';
+      return;
+    }
+  }
+  await doSaveBook(buildBook(), isUpdate);
+}
+async function confirmSaveAnyway() {
+  document.getElementById('dupModal').style.display = 'none';
+  if (pendingBook) { await doSaveBook(pendingBook, false); pendingBook = null; }
+}
+function closeDupModal() {
+  document.getElementById('dupModal').style.display = 'none';
+  pendingBook = null;
+}
+async function doSaveBook(book, isUpdate) {
+  books = isUpdate ? books.map(function(b){ return b.id===editingId ? book : b; }) : [book, ...books];
   persist(); render();
   const msg = document.getElementById('saveMsg');
   const ok = await sheetsSave(book, isUpdate);
-  msg.textContent = scriptUrl ? (ok?'Tallennettu Sheetsiin.':'Tallennettu paikallisesti, synkronoidaan myöhemmin.') : 'Tallennettu paikallisesti.';
+  msg.textContent = scriptUrl ? (ok ? 'Tallennettu Sheetsiin.' : 'Tallennettu paikallisesti, synkronoidaan myöhemmin.') : 'Tallennettu paikallisesti.';
   msg.className = (scriptUrl && !ok) ? 'save-msg err' : 'save-msg';
-  msg.style.display='block'; editingId=null;
-  setTimeout(()=>{document.getElementById('addForm').style.display='none';}, 1400);
+  msg.style.display = 'block'; editingId = null;
+  setTimeout(function() { document.getElementById('addForm').style.display = 'none'; }, 1400);
 }
 async function deleteBook(id) {
   if (!confirm('Poistetaanko kirja?')) return;
-  books=books.filter(b=>b.id!==id); persist(); render();
+  books = books.filter(function(b) { return b.id !== id; }); persist(); render();
   await sheetsDelete(id);
 }
 
+/* ── Date helpers ── */
+function setNoDate() { document.getElementById('fDate').value = ''; updateNoDateBtn(); }
+function updateNoDateBtn() {
+  const hasDate = !!document.getElementById('fDate').value;
+  const btn = document.getElementById('noDateBtn');
+  if (!btn) return;
+  btn.style.background = hasDate ? 'none' : '#111';
+  btn.style.color = hasDate ? '#666' : '#fff';
+  btn.style.borderColor = hasDate ? '#ddd' : '#111';
+}
+
+/* ── Utils ── */
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function fmtDate(d) {
   if (!d) return '';

@@ -56,14 +56,10 @@
 .add-fab:hover { background: linear-gradient(180deg, #484848 0%, #303030 100%); box-shadow: 0 3px 8px rgba(0,0,0,0.22), 0 1px 2px rgba(0,0,0,0.12); transform: translateY(-1px); }
 .add-fab svg { width: 14px; height: 14px; }
 
-.filter-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; align-items: center; }
-.filter-row-year { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; min-height: 24px; }
 .filter-chip { font-size: 12px; padding: 5px 12px; border: 0.5px solid #d0cfce; border-radius: 20px; background: linear-gradient(180deg, #fdfcfc 0%, #f2f1f0 100%); color: #555; cursor: pointer; font-family: inherit; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.07); transition: box-shadow 0.12s, transform 0.1s; }
 .filter-chip:hover { border-color: #aaa; color: #1a1a1a; box-shadow: 0 2px 5px rgba(0,0,0,0.12); transform: translateY(-1px); }
 .filter-chip.active { background: linear-gradient(180deg, #3d3d3d 0%, #252525 100%); color: #f5f4f5; border-color: #2d2d2d; box-shadow: 0 1px 3px rgba(0,0,0,0.22); }
 .filter-chip.year-active { background: linear-gradient(180deg, #4a96e8 0%, #2a78cc 100%); color: #fff; border-color: #2a78cc; box-shadow: 0 1px 3px rgba(55,138,221,0.35); }
-.filter-sep { width: 0.5px; height: 16px; background: #ddd; margin: 0 2px; }
-.filter-label { font-size: 11px; color: #aaa; font-weight: 500; letter-spacing: 0.3px; }
 .result-count { font-size: 12px; color: #888; margin-left: auto; }
 
 .sum-row { display: none; gap: 24px; margin-bottom: 1.5rem; flex-wrap: wrap; }
@@ -175,31 +171,27 @@
 
 
 
-.author-select-wrap { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: #faf9fa; border: 0.5px solid #d0cfce; border-radius: 10px; }
-.author-select-label { font-size: 11px; color: #aaa; font-weight: 500; letter-spacing: 0.3px; white-space: nowrap; margin-top: 8px; }
-.author-select-inner { flex: 1; min-width: 0; }
-.author-select-inner input { width: 100%; font-size: 13px; padding: 5px 10px; border: 0.5px solid #d0cfce; border-radius: 8px; background: #fff; color: #111; font-family: inherit; box-sizing: border-box; margin-bottom: 6px; }
-.author-select-inner input:focus { outline: none; border-color: #999; }
-.author-listbox { display: flex; gap: 5px; flex-wrap: wrap; }
-.author-li { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 4px 10px; border: 0.5px solid #d0cfce; border-radius: 20px; background: #fff; color: #444; cursor: pointer; user-select: none; }
-.author-li:hover { background: #e8e7e6; border-color: #aaa; }
-.author-li-active { background: linear-gradient(180deg, #4a96e8 0%, #2a78cc 100%); color: #fff; border-color: #2a78cc; }
-.author-li-active:hover { background: linear-gradient(180deg, #5aa4ef 0%, #3585d9 100%); }
-.author-li-clear { color: #c0392b; border-color: #e8b4b0; background: #fdf0ef; }
-.author-li-clear:hover { background: #fbe4e2; }
-.author-li-count { font-size: 10px; opacity: 0.6; }
-.author-li-empty { font-size: 12px; color: #999; padding: 4px 2px; }
-#authorFilterWrap { margin-bottom: 1rem; } .author-dropdown-wrap { position: relative; display: block; }
 
-.author-toggle-btn { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; padding: 5px 12px; border: 0.5px solid #d0cfce; border-radius: 20px; background: linear-gradient(180deg, #fdfcfc 0%, #f2f1f0 100%); color: #555; cursor: pointer; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.07); transition: box-shadow 0.12s, background 0.12s; }
-.author-toggle-btn:hover { background: linear-gradient(180deg, #f0efee 0%, #e4e3e2 100%); box-shadow: 0 2px 5px rgba(0,0,0,0.11); }
-.author-toggle-btn.has-value { background: linear-gradient(180deg, #4a96e8 0%, #2a78cc 100%); color: #fff; border-color: #2a78cc; box-shadow: 0 1px 3px rgba(55,138,221,0.35); }
-.author-toggle-btn svg { width: 11px; height: 11px; flex-shrink: 0; transition: transform 0.15s; }
-.author-toggle-btn.open svg { transform: rotate(180deg); }
-.author-dropdown-panel { position: absolute; top: calc(100% + 6px); left: 0; z-index: 60; background: #faf9fa; border: 0.5px solid #d0cfce; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); width: 280px; padding: 8px; }
-.author-dropdown-search { width: 100%; font-size: 13px; padding: 6px 10px; border: 0.5px solid #d0cfce; border-radius: 8px; background: #fff; color: #111; font-family: inherit; box-sizing: border-box; margin-bottom: 6px; }
-.author-dropdown-search:focus { outline: none; border-color: #999; }
-.author-chips-inner { display: flex; gap: 5px; flex-wrap: wrap; max-height: 180px; overflow-y: auto; }
+
+.filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-dd-wrap { position: relative; }
+.filter-dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; border: 0.5px solid #d0cfce; border-radius: 20px; background: linear-gradient(180deg, #fdfcfc 0%, #f2f1f0 100%); color: #555; cursor: pointer; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.07); transition: box-shadow 0.12s, background 0.12s; white-space: nowrap; }
+.filter-dd-btn:hover { background: linear-gradient(180deg, #f0efee 0%, #e4e3e2 100%); box-shadow: 0 2px 5px rgba(0,0,0,0.11); }
+.filter-dd-btn.has-value { background: linear-gradient(180deg, #3d3d3d 0%, #252525 100%); color: #f5f4f5; border-color: #2d2d2d; box-shadow: 0 1px 3px rgba(0,0,0,0.22); }
+.filter-dd-btn svg { width: 11px; height: 11px; flex-shrink: 0; transition: transform 0.15s; }
+.filter-dd-btn.open svg { transform: rotate(180deg); }
+.filter-dd-panel { position: absolute; top: calc(100% + 6px); left: 0; z-index: 60; background: #faf9fa; border: 0.5px solid #d0cfce; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); padding: 8px; min-width: 180px; }
+.filter-dd-search { width: 100%; font-size: 13px; padding: 6px 10px; border: 0.5px solid #d0cfce; border-radius: 8px; background: #fff; color: #111; font-family: inherit; box-sizing: border-box; margin-bottom: 6px; }
+.filter-dd-search:focus { outline: none; border-color: #999; }
+.filter-dd-chips { display: flex; flex-direction: column; gap: 2px; max-height: 220px; overflow-y: auto; }
+.filter-dd-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: #1a1a1a; cursor: pointer; user-select: none; gap: 8px; }
+.filter-dd-item:hover { background: #e8e7e6; }
+.filter-dd-item.active { background: linear-gradient(180deg, #3d3d3d 0%, #252525 100%); color: #f5f4f5; }
+.filter-dd-item.active:hover { background: linear-gradient(180deg, #484848 0%, #303030 100%); }
+.filter-dd-item.clear { color: #c0392b; }
+.filter-dd-item.clear:hover { background: #fdf0ef; }
+.filter-dd-count { font-size: 11px; opacity: 0.6; flex-shrink: 0; }
+.filter-dd-sep { height: 0.5px; background: #e0dede; margin: 4px 0; }
 ```
 
   </style>
@@ -286,17 +278,37 @@
     </button>
   </div>
 
-  <div class="filter-row">
-    <button class="filter-chip active" onclick="setFilter('kaikki',this)">Kaikki</button>
-    <button class="filter-chip" onclick="setFilter('luettu',this)">Luettu</button>
-    <button class="filter-chip" onclick="setFilter('kuunneltu',this)">Kuunneltu</button>
-    <button class="filter-chip" onclick="setFilter('kesken',this)">Kesken</button>
-    <button class="filter-chip" onclick="setFilter('haluaa',this)">Haluaa lukea</button>
-    <div class="filter-sep"></div>
+  <div class="filter-bar">
+    <div class="filter-dd-wrap" id="statusWrap">
+      <button class="filter-dd-btn" id="statusBtn" onclick="toggleFilterDd('status')">
+        <span id="statusLabel">Tila</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>
+      </button>
+      <div class="filter-dd-panel" id="statusPanel" style="display:none;">
+        <div class="filter-dd-chips" id="statusChips"></div>
+      </div>
+    </div>
+    <div class="filter-dd-wrap" id="yearWrap">
+      <button class="filter-dd-btn" id="yearBtn" onclick="toggleFilterDd('year')">
+        <span id="yearLabel">Vuosi</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>
+      </button>
+      <div class="filter-dd-panel" id="yearPanel" style="display:none;">
+        <div class="filter-dd-chips" id="yearChips"></div>
+      </div>
+    </div>
+    <div class="filter-dd-wrap" id="authorWrap">
+      <button class="filter-dd-btn" id="authorBtn" onclick="toggleFilterDd('author')">
+        <span id="authorLabel">Tekijä</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>
+      </button>
+      <div class="filter-dd-panel" id="authorPanel" style="display:none;">
+        <input class="filter-dd-search" id="authorSearchInput" type="text" placeholder="Hae tekijää..." autocomplete="off" oninput="onAuthorSearch(this.value)" />
+        <div class="filter-dd-chips" id="authorChips"></div>
+      </div>
+    </div>
     <span class="result-count" id="resultCount"></span>
   </div>
-  <div class="filter-row-year" id="yearFilterRow"></div>
-  <div id="authorFilterWrap"></div>
   <div class="sum-row" id="sumRow"></div>
 
   <div class="form-card" id="addForm" style="display:none;">
@@ -769,6 +781,16 @@ function init() {
   document.addEventListener('click', function(e) {
     if (!document.getElementById('toolsBtn').contains(e.target) &&
         !document.getElementById('toolsMenu').contains(e.target)) closeTools();
+    // Close filter dropdowns when clicking outside
+    var fb = document.getElementById('statusWrap');
+    var fy = document.getElementById('yearWrap');
+    var fa = document.getElementById('authorWrap');
+    if (openFilterDd && fb && fy && fa &&
+        !fb.contains(e.target) && !fy.contains(e.target) && !fa.contains(e.target)) {
+      openFilterDd = null;
+      authorSearchQuery = '';
+      renderAllFilters();
+    }
 
   });
   render();
@@ -861,10 +883,8 @@ function onSearch(v) {
   render();
 }
 function clearSearch() { document.getElementById('searchInput').value = ''; onSearch(''); }
-function setFilter(f, el) {
+function setFilter(f) {
   currentFilter = f;
-  document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
-  el.classList.add('active');
   render();
 }
 function setYearFilter(y) {
@@ -918,26 +938,8 @@ function render() {
     sumEl.style.display = 'none';
   }
 
-  // Year chips
-  var years = [];
-  books.forEach(function(b) {
-    if (b.date) { var nd = toInputDate(b.date); var m = nd.match(/^(\d{4})/); if (m) { var y = parseInt(m[1]); if (!years.includes(y)) years.push(y); } }
-  });
-  years.sort(function(a,b){return b-a;});
-  var yearRow = document.getElementById('yearFilterRow');
-  if (years.length) {
-    var html = '<span class="filter-label">Vuosi:</span>';
-    years.forEach(function(y) {
-      html += '<button class="filter-chip' + (currentYear===y?' year-active':'') + '" onclick="setYearFilter(' + y + ')">' + y + '</button>';
-    });
-    if (currentYear) html += '<button class="filter-chip" onclick="setYearFilter(null)" style="color:#c0392b;border-color:#e8b4b0;background:#fdf0ef;">Tyhjennä</button>';
-    yearRow.innerHTML = html;
-  } else {
-    yearRow.innerHTML = '';
-  }
-
-  // Author filter
-  renderAuthorSelect();
+  // All filter dropdowns
+  renderAllFilters();
 
   // Result count
   document.getElementById('resultCount').textContent =
@@ -981,6 +983,239 @@ function render() {
     '</div>';
   }).join('');
 }
+
+// ── Unified filter dropdown system ─────────────────────────────────────────
+var openFilterDd = null; // 'status' | 'year' | 'author' | null
+
+function toggleFilterDd(name) {
+  openFilterDd = (openFilterDd === name) ? null : name;
+  if (openFilterDd !== 'author') {
+    authorSearchQuery = '';
+    var inp = document.getElementById('authorSearchInput');
+    if (inp) inp.value = '';
+  }
+  renderAllFilters();
+  if (openFilterDd === 'author') {
+    setTimeout(function() {
+      var inp = document.getElementById('authorSearchInput');
+      if (inp) inp.focus();
+    }, 30);
+  }
+}
+
+function renderAllFilters() {
+  renderStatusFilter();
+  renderYearFilter();
+  renderAuthorFilter();
+}
+
+function renderStatusFilter() {
+  var statusMap = {
+    kaikki: 'Tila',
+    luettu: 'Luettu',
+    kuunneltu: 'Kuunneltu',
+    kesken: 'Kesken',
+    haluaa: 'Haluaa lukea'
+  };
+  var btn = document.getElementById('statusBtn');
+  var panel = document.getElementById('statusPanel');
+  var label = document.getElementById('statusLabel');
+  if (!btn) return;
+
+  var isOpen = openFilterDd === 'status';
+  label.textContent = statusMap[currentFilter] || 'Tila';
+  btn.classList.toggle('has-value', currentFilter !== 'kaikki');
+  btn.classList.toggle('open', isOpen);
+  panel.style.display = isOpen ? 'block' : 'none';
+
+  if (!isOpen) return;
+
+  var chips = document.getElementById('statusChips');
+  var items = '';
+  Object.keys(statusMap).forEach(function(k) {
+    var count = k === 'kaikki' ? books.length : books.filter(function(b) { return b.status === k; }).length;
+    var cls = 'filter-dd-item' + (currentFilter === k ? ' active' : '');
+    items += '<div class="' + cls + '" data-status="' + k + '">' +
+      '<span>' + statusMap[k] + '</span>' +
+      '<span class="filter-dd-count">' + count + '</span>' +
+    '</div>';
+  });
+  chips.innerHTML = items;
+  chips.querySelectorAll('.filter-dd-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      currentFilter = el.getAttribute('data-status');
+      openFilterDd = null;
+      render();
+    });
+  });
+}
+
+function renderYearFilter() {
+  var btn = document.getElementById('yearBtn');
+  var panel = document.getElementById('yearPanel');
+  var label = document.getElementById('yearLabel');
+  if (!btn) return;
+
+  var years = [];
+  books.forEach(function(b) {
+    if (b.date) {
+      var nd = toInputDate(b.date);
+      var m = nd.match(/^(\d{4})/);
+      if (m) { var y = parseInt(m[1]); if (!years.includes(y)) years.push(y); }
+    }
+  });
+  years.sort(function(a, b) { return b - a; });
+
+  var hasYears = years.length > 0;
+  btn.style.display = hasYears ? '' : 'none';
+  if (!hasYears) { panel.style.display = 'none'; return; }
+
+  var isOpen = openFilterDd === 'year';
+  label.textContent = currentYear ? String(currentYear) : 'Vuosi';
+  btn.classList.toggle('has-value', !!currentYear);
+  btn.classList.toggle('open', isOpen);
+  panel.style.display = isOpen ? 'block' : 'none';
+
+  if (!isOpen) return;
+
+  var chips = document.getElementById('yearChips');
+  var items = '';
+  if (currentYear) {
+    items += '<div class="filter-dd-item clear" data-year="">× Tyhjennä</div><div class="filter-dd-sep"></div>';
+  }
+  years.forEach(function(y) {
+    var count = books.filter(function(b) {
+      if (!b.date) return false;
+      var m = toInputDate(b.date).match(/^(\d{4})/);
+      return m && parseInt(m[1]) === y;
+    }).length;
+    var cls = 'filter-dd-item' + (currentYear === y ? ' active' : '');
+    items += '<div class="' + cls + '" data-year="' + y + '">' +
+      '<span>' + y + '</span><span class="filter-dd-count">' + count + '</span>' +
+    '</div>';
+  });
+  chips.innerHTML = items;
+  chips.querySelectorAll('.filter-dd-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var v = el.getAttribute('data-year');
+      currentYear = (v === '' || currentYear === parseInt(v)) ? null : parseInt(v);
+      openFilterDd = null;
+      render();
+    });
+  });
+}
+
+function renderAuthorFilter() {
+  var btn = document.getElementById('authorBtn');
+  var panel = document.getElementById('authorPanel');
+  var label = document.getElementById('authorLabel');
+  if (!btn) return;
+
+  var authorCounts = {};
+  books.forEach(function(b) {
+    if (b.author) authorCounts[b.author] = (authorCounts[b.author] || 0) + 1;
+  });
+  var authors = Object.keys(authorCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
+
+  var hasAuthors = authors.length > 1;
+  btn.style.display = hasAuthors ? '' : 'none';
+  if (!hasAuthors) { panel.style.display = 'none'; return; }
+
+  var isOpen = openFilterDd === 'author';
+  label.textContent = currentAuthor ? currentAuthor : 'Tekijä';
+  btn.classList.toggle('has-value', !!currentAuthor);
+  btn.classList.toggle('open', isOpen);
+  panel.style.display = isOpen ? 'block' : 'none';
+
+  if (!isOpen) return;
+
+  renderAuthorChips(authorCounts, authors);
+}
+
+function renderAuthorChips(authorCounts, authors) {
+  var chips = document.getElementById('authorChips');
+  if (!chips) return;
+
+  var filtered = authors.filter(function(a) {
+    return !authorSearchQuery || a.toLowerCase().includes(authorSearchQuery.toLowerCase());
+  });
+
+  var items = '';
+  if (currentAuthor) {
+    items += '<div class="filter-dd-item clear" data-author="">× Tyhjennä</div><div class="filter-dd-sep"></div>';
+  }
+  if (filtered.length === 0) {
+    items += '<div class="filter-dd-item" style="color:#999;cursor:default;">Ei tuloksia</div>';
+  } else {
+    filtered.forEach(function(a) {
+      var cls = 'filter-dd-item' + (currentAuthor === a ? ' active' : '');
+      items += '<div class="' + cls + '" data-author="' + esc(a) + '">' +
+        '<span>' + esc(a) + '</span><span class="filter-dd-count">' + authorCounts[a] + '</span>' +
+      '</div>';
+    });
+  }
+  chips.innerHTML = items;
+  chips.querySelectorAll('.filter-dd-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var v = el.getAttribute('data-author');
+      currentAuthor = (v === null || v === '' || currentAuthor === v) ? null : v;
+      authorSearchQuery = '';
+      openFilterDd = null;
+      var inp = document.getElementById('authorSearchInput');
+      if (inp) inp.value = '';
+      render();
+    });
+  });
+}
+
+function onAuthorSearch(val) {
+  authorSearchQuery = val;
+  var authorCounts = {};
+  books.forEach(function(b) {
+    if (b.author) authorCounts[b.author] = (authorCounts[b.author] || 0) + 1;
+  });
+  var authors = Object.keys(authorCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
+  // Auto-select if exactly one match
+  var matches = authors.filter(function(a) {
+    return a.toLowerCase().includes(val.toLowerCase());
+  });
+  if (matches.length === 1) {
+    currentAuthor = matches[0];
+  } else if (currentAuthor && !matches.includes(currentAuthor)) {
+    currentAuthor = null;
+  }
+  renderAuthorChips(authorCounts, authors);
+  // Update book list without touching filter UI
+  var filtered = getFiltered();
+  document.getElementById('resultCount').textContent =
+    filtered.length + ' kirjaa';
+  var list = document.getElementById('bookList');
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-title">Ei kirjoja tässä suodatuksessa</div></div>';
+    return;
+  }
+  list.innerHTML = filtered.map(function(b) {
+    var extraStr = fmtExtra(b.extra, b.status);
+    return '<div class="book-item">' +
+      '<div class="book-spine ' + b.status + '"></div>' +
+      '<div class="book-body">' +
+        '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +
+        (b.author ? '<div class="book-author">' + highlight(b.author, searchQuery) + '</div>' : '') +
+        '<div class="book-footer">' +
+          '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
+          (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
+          (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
+        '</div>' +
+        (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
+      '</div>' +
+      '<div class="book-actions">' +
+        '<button class="icon-btn" title="Muokkaa" onclick="startEdit(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg></button>' +
+        '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
 
 function onStatusChange() {
   var isTime = document.getElementById('fStatus').value === 'kuunneltu';
@@ -1255,225 +1490,6 @@ function updateAuthorSuggestions() {
 // Uses a <select> element — zero click issues, native browser behaviour.
 // The select is rebuilt each render but that's fine because it's not focused.
 
-var authorDropdownOpen = false;
-
-
-function renderBookListOnly() {
-  var filtered = getFiltered();
-
-  var sums = sumExtras(filtered);
-  var sumEl = document.getElementById('sumRow');
-  if (sums.length) {
-    sumEl.innerHTML = sums.map(function(s) {
-      return '<div class="sum-item"><strong>' + s.value + '</strong>' + s.label + '</div>';
-    }).join('');
-    sumEl.style.display = 'flex';
-  } else {
-    sumEl.style.display = 'none';
-  }
-
-  document.getElementById('resultCount').textContent =
-    searchQuery ? filtered.length + ' tulosta' :
-    (currentFilter !== 'kaikki' || currentYear || currentAuthor) ? filtered.length + ' kirjaa' : '';
-
-  var list = document.getElementById('bookList');
-  if (!filtered.length) {
-    list.innerHTML = '<div class="empty"><div class="empty-title">' +
-      (searchQuery ? 'Ei tuloksia haulle "' + esc(searchQuery) + '"' :
-       'Ei kirjoja tässä suodatuksessa') +
-      '</div><div class="empty-sub">Kokeile eri hakusanaa tai muuta suodatinta.</div></div>';
-    return;
-  }
-  list.innerHTML = filtered.map(function(b) {
-    var extraStr = fmtExtra(b.extra, b.status);
-    return '<div class="book-item">' +
-      '<div class="book-spine ' + b.status + '"></div>' +
-      '<div class="book-body">' +
-        '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +
-        (b.author ? '<div class="book-author">' + highlight(b.author, searchQuery) + '</div>' : '') +
-        '<div class="book-footer">' +
-          '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
-          (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
-          (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
-        '</div>' +
-        (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
-      '</div>' +
-      '<div class="book-actions">' +
-        '<button class="icon-btn" title="Muokkaa" onclick="startEdit(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg></button>' +
-        '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg></button>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-
-function renderAuthorSelect() {
-  var wrap = document.getElementById('authorFilterWrap');
-  var authorCounts = {};
-  books.forEach(function(b) {
-    if (b.author) authorCounts[b.author] = (authorCounts[b.author] || 0) + 1;
-  });
-  var authors = Object.keys(authorCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
-
-  if (authors.length < 2) {
-    wrap.style.display = 'none';
-    wrap.innerHTML = '';
-    authorDropdownOpen = false;
-    return;
-  }
-
-  wrap.style.display = 'block';
-
-  var btnLabel = currentAuthor ? currentAuthor : 'Tekijä';
-  var btnCls = 'author-toggle-btn' + (currentAuthor ? ' has-value' : '') + (authorDropdownOpen ? ' open' : '');
-
-  var panelHtml = authorDropdownOpen
-    ? '<div class="author-dropdown-panel" id="authorDropdownPanel">' +
-        '<input class="author-dropdown-search" id="authorSearchInput" type="text" placeholder="Hae tekijää..." autocomplete="off" value="' + esc(authorSearchQuery) + '" oninput="onAuthorSearch(this.value)" />' +
-        '<div class="author-chips-inner" id="authorListBox"></div>' +
-      '</div>'
-    : '';
-
-  wrap.innerHTML =
-    '<div class="author-dropdown-wrap">' +
-      '<button class="' + btnCls + '" id="authorToggleBtn" onclick="toggleAuthorDropdown()">' +
-        esc(btnLabel) +
-        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>' +
-      '</button>' +
-      panelHtml +
-    '</div>';
-
-  if (authorDropdownOpen) {
-    renderAuthorListBox(authorCounts, authors);
-    // Restore focus and cursor position in search field
-    var inp = document.getElementById('authorSearchInput');
-    if (inp && document.activeElement !== inp) {
-      inp.focus();
-      inp.setSelectionRange(inp.value.length, inp.value.length);
-    }
-  }
-}
-
-function toggleAuthorDropdown() {
-  authorDropdownOpen = !authorDropdownOpen;
-  if (!authorDropdownOpen) {
-    authorSearchQuery = '';
-  }
-  renderAuthorSelect();
-}
-
-function renderAuthorListBox(authorCounts, authors) {
-  var box = document.getElementById('authorListBox');
-  if (!box) return;
-
-  var filtered = authors.filter(function(a) {
-    return !authorSearchQuery || a.toLowerCase().includes(authorSearchQuery.toLowerCase());
-  });
-
-  var html = '';
-  if (currentAuthor) {
-    html += '<div class="author-li author-li-clear" data-author="">× Tyhjennä</div>';
-  }
-  filtered.forEach(function(a) {
-    var sel = currentAuthor === a ? ' author-li-active' : '';
-    html += '<div class="author-li' + sel + '" data-author="' + esc(a) + '">' +
-      '<span>' + esc(a) + '</span><span class="author-li-count">' + authorCounts[a] + '</span>' +
-    '</div>';
-  });
-  if (filtered.length === 0 && !currentAuthor) {
-    html = '<div class="author-li-empty">Ei tuloksia</div>';
-  }
-  box.innerHTML = html;
-
-  // Attach click handlers directly to elements — no inline onclick strings
-  box.querySelectorAll('.author-li').forEach(function(el) {
-    el.addEventListener('click', function() {
-      var a = el.getAttribute('data-author');
-      currentAuthor = (a === '' || currentAuthor === a) ? null : a;
-      authorSearchQuery = '';
-      authorDropdownOpen = false;
-      render();
-    });
-  });
-}
-
-function onAuthorSearch(val) {
-  authorSearchQuery = val;
-  var authorCounts = {};
-  books.forEach(function(b) {
-    if (b.author) authorCounts[b.author] = (authorCounts[b.author] || 0) + 1;
-  });
-  var authors = Object.keys(authorCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
-  // Auto-select if exactly one match
-  var matches = authors.filter(function(a) {
-    return a.toLowerCase().includes(val.toLowerCase());
-  });
-  if (matches.length === 1) {
-    currentAuthor = matches[0];
-  } else if (currentAuthor && !matches.includes(currentAuthor)) {
-    currentAuthor = null;
-  }
-  renderAuthorListBox(authorCounts, authors);
-  // Re-render book list only (don't call full render to preserve input focus)
-  renderBookList();
-}
-
-function renderBookList() {
-  var filtered = getFiltered();
-
-  // Sums
-  var sums = sumExtras(filtered);
-  var sumEl = document.getElementById('sumRow');
-  if (sums.length) {
-    sumEl.innerHTML = sums.map(function(s) {
-      return '<div class="sum-item"><strong>' + s.value + '</strong>' + s.label + '</div>';
-    }).join('');
-    sumEl.style.display = 'flex';
-  } else {
-    sumEl.style.display = 'none';
-  }
-
-  // Result count
-  document.getElementById('resultCount').textContent =
-    searchQuery ? filtered.length + ' tulosta' :
-    (currentFilter !== 'kaikki' || currentYear || currentAuthor) ? filtered.length + ' kirjaa' : '';
-
-  // Book list
-  var list = document.getElementById('bookList');
-  if (!filtered.length) {
-    list.innerHTML = '<div class="empty"><div class="empty-title">' +
-      (searchQuery ? 'Ei tuloksia haulle "' + esc(searchQuery) + '"' :
-       (currentFilter !== 'kaikki' || currentYear || currentAuthor) ? 'Ei kirjoja tässä suodatuksessa' : 'Hylly on tyhjä') +
-      '</div><div class="empty-sub">' +
-      (searchQuery ? 'Kokeile eri hakusanaa.' : 'Lisää ensimmäinen kirja tai tuo CSV/JSON Työkalut-valikosta.') +
-      '</div></div>';
-    return;
-  }
-  list.innerHTML = filtered.map(function(b) {
-    var extraStr = fmtExtra(b.extra, b.status);
-    return '<div class="book-item">' +
-      '<div class="book-spine ' + b.status + '"></div>' +
-      '<div class="book-body">' +
-        '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +
-        (b.author ? '<div class="book-author">' + highlight(b.author, searchQuery) + '</div>' : '') +
-        '<div class="book-footer">' +
-          '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
-          (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
-          (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
-        '</div>' +
-        (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
-      '</div>' +
-      '<div class="book-actions">' +
-        '<button class="icon-btn" title="Muokkaa" onclick="startEdit(\'' + b.id + '\')">' +
-          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg>' +
-        '</button>' +
-        '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\')">' +
-          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg>' +
-        '</button>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
 
 function openHelp() {
   document.getElementById('helpModal').style.display = 'flex';

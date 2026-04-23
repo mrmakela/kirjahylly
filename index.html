@@ -393,8 +393,10 @@ html.dark {
       </div>
       <div class="form-row">
         <label>Tekijä</label>
-        <input type="text" id="fAuthor" placeholder="esim. Johanna Sinisalo" autocomplete="off" list="authorSuggestions" />
-        <datalist id="authorSuggestions"></datalist>
+        <div style="position:relative;">
+          <input type="text" id="fAuthor" placeholder="esim. Johanna Sinisalo" autocomplete="off" oninput="onAuthorInput(this.value)" onfocus="onAuthorInput(this.value)" onblur="closeAuthorSuggest()" style="width:100%;" />
+          <div id="authorSuggestBox" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--bg-card);border:0.5px solid var(--border);border-radius:8px;box-shadow:0 4px 12px var(--shadow-md);margin-top:3px;overflow:hidden;"></div>
+        </div>
       </div>
       <div class="form-row">
         <label>Tila</label>
@@ -1288,7 +1290,7 @@ function onStatusChange() {
 }
 function toggleForm() {
   var f = document.getElementById('addForm');
-  if (f.style.display !== 'none') { f.style.display = 'none'; editingId = null; return; }
+  if (f.style.display !== 'none') { f.style.display = 'none'; editingId = null; closeAuthorSuggest(); return; }
   editingId = null;
   document.getElementById('formTitle').textContent = 'Uusi kirja';
   document.getElementById('saveBtn').textContent = 'Tallenna';
@@ -1540,14 +1542,43 @@ function fmtDate(d) {
 
 
 function updateAuthorSuggestions() {
+  // no-op — replaced by custom autocomplete
+}
+
+function getAuthorList() {
   var authors = [];
   books.forEach(function(b) {
     if (b.author && !authors.includes(b.author)) authors.push(b.author);
   });
-  authors.sort(function(a, b) { return a.localeCompare(b, 'fi'); });
-  var dl = document.getElementById('authorSuggestions');
-  if (!dl) return;
-  dl.innerHTML = authors.map(function(a) { return '<option value="' + esc(a) + '">'; }).join('');
+  return authors.sort(function(a, b) { return a.localeCompare(b, 'fi'); });
+}
+
+function onAuthorInput(val) {
+  var box = document.getElementById('authorSuggestBox');
+  if (!box) return;
+  var authors = getAuthorList();
+  var q = val.trim().toLowerCase();
+  var matches = q
+    ? authors.filter(function(a) { return a.toLowerCase().includes(q) && a !== val; })
+    : [];
+  if (!matches.length) { box.style.display = 'none'; return; }
+  box.innerHTML = matches.map(function(a) {
+    return '<div class="author-suggest-item" data-val="' + esc(a) + '" onmousedown="event.preventDefault();pickAuthorSuggest(this)">' + esc(a) + '</div>';
+  }).join('');
+  box.style.display = 'block';
+}
+
+function pickAuthorSuggest(el) {
+  var a = el.getAttribute('data-val');
+  var inp = document.getElementById('fAuthor');
+  if (inp) inp.value = a;
+  var box = document.getElementById('authorSuggestBox');
+  if (box) box.style.display = 'none';
+}
+
+function closeAuthorSuggest() {
+  var box = document.getElementById('authorSuggestBox');
+  if (box) box.style.display = 'none';
 }
 
 // ── Author filter ──────────────────────────────────────────────────────────

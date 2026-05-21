@@ -129,7 +129,7 @@ html.dark {
     .tools-divider { height: 0.5px; background: var(--bg-hover); margin: 4px 0; }
 
     .toolbar { display: flex; gap: 10px; margin-bottom: 1.25rem; align-items: center; }
-    .search-wrap { position: relative; flex: 1; }
+    .search-wrap { position: relative; flex: 1; min-width: 0; }
     .search-wrap svg.ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-3); pointer-events: none; }
     .search-wrap input { width: 100%; font-size: 14px; padding: 9px 12px 9px 34px; border: 0.5px solid var(--border); border-radius: 12px; font-family: inherit; background: var(--bg-input); color: var(--text); }
     .search-wrap input:focus { outline: none; border-color: var(--text-3); }
@@ -279,6 +279,63 @@ html.dark {
     .theme-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 0.5px solid var(--border); border-radius: 50%; background: linear-gradient(180deg, var(--btn-light-from) 0%, var(--btn-light-to) 100%); color: var(--text-2); cursor: pointer; font-family: inherit; box-shadow: 0 1px 2px var(--shadow-sm); transition: background 0.15s, box-shadow 0.15s; flex-shrink: 0; }
     .theme-btn:hover { background: linear-gradient(180deg, var(--btn-hover-from) 0%, var(--btn-hover-to) 100%); box-shadow: 0 2px 5px var(--shadow-sm); }
     .theme-btn svg { width: 15px; height: 15px; }
+
+    /* ── Mobile optimisation ──────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .app { padding: 1.25rem 0.875rem 2.5rem; }
+
+      /* Header — stack controls on second row */
+      .header-top { flex-wrap: wrap; gap: 8px; }
+      .header-right { gap: 6px; }
+      .app-name { font-size: 19px; }
+      .conn-indicator span { display: none; } /* hide "Sheets yhdistetty" text, keep dot */
+
+      /* Toolbar — search shrinks, Lisää stays right */
+      .toolbar { gap: 8px; }
+      .search-wrap input { font-size: 14px; padding: 9px 10px 9px 32px; }
+      .add-fab { padding: 9px 13px; font-size: 13px; }
+
+      /* Stats — tighter */
+      .stat-row { gap: 14px; margin-bottom: 1.25rem; }
+      .stat-num { font-size: 17px; }
+
+      /* Sum row — stack vertically */
+      .sum-row { flex-direction: column; gap: 4px; }
+      .sum-item strong { font-size: 14px; }
+
+      /* Filter bar — allow wrapping, smaller */
+      .filter-bar { gap: 6px; }
+      .filter-dd-btn { font-size: 11px; padding: 5px 10px; }
+
+      /* Book list — tighter padding */
+      .book-list { padding: 0 0.75rem; }
+      .book-item { gap: 10px; padding: 12px 0; }
+      .book-title { font-size: 14px; }
+      .book-author { font-size: 12px; }
+      .book-spine { width: 3px; height: 46px; }
+
+      /* Form — single column */
+      .form-grid { grid-template-columns: 1fr; }
+      .form-row[style*="grid-column"] { grid-column: 1 !important; }
+      .form-card { padding: 1rem; }
+
+      /* Modals — full width with margin */
+      .modal { padding: 1.25rem; }
+      .modal-wide { max-width: 100%; }
+
+      /* Filter dropdown panels — full width on mobile */
+      .filter-dd-panel { width: calc(100vw - 1.75rem); left: 0; }
+
+      /* Auth dropdown */
+      .author-dropdown-panel { width: calc(100vw - 1.75rem); }
+    }
+
+    @media (max-width: 360px) {
+      .app { padding: 1rem 0.75rem 2rem; }
+      .stat-row { gap: 10px; }
+      .stat-num { font-size: 15px; }
+      .app-name { font-size: 17px; }
+    }
   </style>
 </head>
 <body>

@@ -427,7 +427,7 @@ html.dark {
       <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="6.5" cy="6.5" r="4"/><line x1="10" y1="10" x2="14" y2="14"/>
       </svg>
-      <input type="text" id="searchInput" placeholder="Hae nimellä, tekijällä tai muistiinpanoilla..." oninput="onSearch(this.value)" />
+      <input type="text" id="searchInput" placeholder="Hae nimellä, tekijällä, sarjalla tai muistiinpanoilla..." oninput="onSearch(this.value)" />
       <button class="clear-btn" id="clearBtn" onclick="clearSearch()">×</button>
     </div>
     <button class="add-fab" onclick="toggleForm()">
@@ -1091,6 +1091,7 @@ function getFiltered() {
     if (!searchQuery) return true;
     return (b.title||'').toLowerCase().includes(searchQuery) ||
            (b.author||'').toLowerCase().includes(searchQuery) ||
+           (b.series||'').toLowerCase().includes(searchQuery) ||
            (b.notes||'').toLowerCase().includes(searchQuery);
   }).sort(function(a,b){ return (a.title||'').localeCompare(b.title||'', 'fi'); });
 }

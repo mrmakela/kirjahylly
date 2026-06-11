@@ -205,6 +205,7 @@ html.dark {
     .status-tag.haluaa { background: #F1EFE8; color: #5F5E5A; }
     .book-date { font-size: 12px; color: var(--text-3); }
     .book-extra { font-size: 12px; color: var(--text-3); }
+    .book-series { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--bg-hover); color: var(--text-2); border: 0.5px solid var(--border); }
     .book-notes { font-size: 13px; color: var(--text-2); margin-top: 8px; line-height: 1.55; }
     .book-actions { display: flex; gap: 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
     .book-item:hover .book-actions { opacity: 1; }
@@ -514,6 +515,14 @@ html.dark {
           <input type="number" id="fMins" min="0" max="59" placeholder="0" />
           <span>min</span>
         </div>
+      </div>
+      <div class="form-row">
+        <label>Sarja</label>
+        <input type="text" id="fSeries" placeholder="esim. Musta torni" />
+      </div>
+      <div class="form-row">
+        <label>Osa</label>
+        <input type="number" id="fSeriesNum" min="1" max="999" placeholder="esim. 1" />
       </div>
       <div class="form-row" style="grid-column:1/-1;">
         <label>Muistiinpanot</label>
@@ -1027,6 +1036,7 @@ async function sheetsSave(book, isUpdate) {
   var op = { action: isUpdate ? 'updateBook' : 'addBook',
     id:book.id, title:book.title, author:book.author,
     status:book.status, date:toInputDate(book.date), extra:book.extra||'',
+    series:book.series||'', seriesNum:book.seriesNum||'',
     notes:book.notes, added:book.added };
   if (!scriptUrl) { pendingOps.push(op); persistPending(); updatePendingBadge(); return false; }
   try { var d = await sheetsGet(op); return d.success; }
@@ -1130,6 +1140,7 @@ function render() {
         '<div class="book-footer">' +
           '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
           (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
+          (b.series ? '<span class="book-series">' + esc(b.series) + (b.seriesNum ? ' ' + b.seriesNum : '') + '</span>' : '') +
           (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
         '</div>' +
         (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
@@ -1366,6 +1377,7 @@ function onAuthorSearch(val) {
         '<div class="book-footer">' +
           '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
           (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
+          (b.series ? '<span class="book-series">' + esc(b.series) + (b.seriesNum ? ' ' + b.seriesNum : '') + '</span>' : '') +
           (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
         '</div>' +
         (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
@@ -1397,6 +1409,8 @@ function toggleForm() {
   document.getElementById('fPages').value = '';
   document.getElementById('fHours').value = '';
   document.getElementById('fMins').value = '';
+  document.getElementById('fSeries').value = '';
+  document.getElementById('fSeriesNum').value = '';
   document.getElementById('fNotes').value = '';
   document.getElementById('saveMsg').style.display = 'none';
   onStatusChange();
@@ -1414,6 +1428,8 @@ function startEdit(id) {
   document.getElementById('fAuthor').value = b.author || '';
   document.getElementById('fStatus').value = b.status;
   document.getElementById('fDate').value = toInputDate(b.date);
+  document.getElementById('fSeries').value = b.series || '';
+  document.getElementById('fSeriesNum').value = b.seriesNum || '';
   document.getElementById('fNotes').value = b.notes || '';
   document.getElementById('saveMsg').style.display = 'none';
   onStatusChange();
@@ -1434,6 +1450,8 @@ function buildBook() {
     status: document.getElementById('fStatus').value,
     date: document.getElementById('fDate').value,
     extra: buildExtraValue(),
+    series: document.getElementById('fSeries').value.trim(),
+    seriesNum: document.getElementById('fSeriesNum').value.trim(),
     notes: document.getElementById('fNotes').value.trim(),
     added: isUpdate
       ? ((books.find(function(b){return b.id===editingId;})||{}).added || new Date().toISOString())
@@ -1499,7 +1517,7 @@ function updateNoDateBtn() {
 
 /* ── CSV ── */
 function bookToCSVRow(b) {
-  var fields = [b.title||'', b.author||'', b.status||'', b.date||'', b.extra||'', b.notes||''];
+  var fields = [b.title||'', b.author||'', b.status||'', b.date||'', b.extra||'', b.series||'', b.seriesNum||'', b.notes||''];
   return fields.map(function(v) {
     var s = String(v);
     return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
@@ -1594,7 +1612,7 @@ function doImportJSON() {
     var fresh=arr.filter(function(b){return b.title && !ex.has((b.title||'').toLowerCase()+'|'+(b.author||'').toLowerCase());})
       .map(function(b){return {id:b.id||(Date.now()+Math.random()),title:b.title,author:b.author||'',
         status:VALID_STATUS.includes(b.status)?b.status:'haluaa',
-        date:b.date||'',extra:b.extra||'',notes:b.notes||'',
+        date:b.date||'',extra:b.extra||'',series:b.series||'',seriesNum:b.seriesNum||'',notes:b.notes||'',
         added:b.added||new Date().toISOString()};});
     books=fresh.concat(books); persist(); render();
     fresh.forEach(function(b){sheetsSave(b,false);});

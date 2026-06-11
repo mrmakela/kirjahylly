@@ -1011,9 +1011,20 @@ async function syncNow() {
     await flushPending();
     var data = await sheetsGet({ action: 'getBooks' });
     if (data.books) {
-      books = data.books; persist(); render();
-      setSyncStatus('Synkronoitu ' + new Date().toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}));
-      updateConn('ok', 'Sheets yhdistetty');
+      // Turvatarkistus: jos Sheets palauttaa tyhjän mutta paikallisesti on
+      // kirjoja, ÄLÄ ylikirjoita — lähetä paikalliset kirjat Sheetsiin sen sijaan.
+      if (data.books.length === 0 && books.length > 0) {
+        setSyncStatus('Sheets tyhjä – palautetaan paikalliset kirjat...');
+        for (var bi = 0; bi < books.length; bi++) {
+          await sheetsSave(books[bi], false);
+        }
+        setSyncStatus('Paikalliset kirjat palautettu Sheetsiin ' + new Date().toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}));
+        updateConn('ok', 'Sheets yhdistetty');
+      } else {
+        books = data.books; persist(); render();
+        setSyncStatus('Synkronoitu ' + new Date().toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}));
+        updateConn('ok', 'Sheets yhdistetty');
+      }
     } else throw new Error();
   } catch(e) {
     setSyncStatus('Yhteys epäonnistui – paikallinen data käytössä');

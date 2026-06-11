@@ -205,6 +205,10 @@ html.dark {
     .status-tag.haluaa { background: #F1EFE8; color: #5F5E5A; }
     .book-date { font-size: 12px; color: var(--text-3); }
     .book-extra { font-size: 12px; color: var(--text-3); }
+    .series-header { font-size: 13px; font-weight: 600; color: var(--text); padding: 14px 0 8px; display: flex; align-items: baseline; gap: 8px; }
+    .series-header:first-child { padding-top: 6px; }
+    .series-header-count { font-size: 11px; font-weight: 400; color: var(--text-3); }
+    .series-header-other { font-weight: 500; color: var(--text-3); font-size: 12px; border-top: 0.5px solid var(--border-3); margin-top: 4px; }
     .book-series { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--bg-hover); color: var(--text-2); border: 0.5px solid var(--border); }
     .book-notes { font-size: 13px; color: var(--text-2); margin-top: 8px; line-height: 1.55; }
     .book-actions { display: flex; gap: 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
@@ -1081,7 +1085,7 @@ function setAuthorFilter(a) {
 }
 
 function getFiltered() {
-  return books.filter(function(b) {
+  var result = books.filter(function(b) {
     if (currentFilter !== 'kaikki' && b.status !== currentFilter) return false;
     if (currentYear) {
       var m = b.date ? toInputDate(b.date).match(/^(\d{4})/) : null;
@@ -1093,7 +1097,36 @@ function getFiltered() {
            (b.author||'').toLowerCase().includes(searchQuery) ||
            (b.series||'').toLowerCase().includes(searchQuery) ||
            (b.notes||'').toLowerCase().includes(searchQuery);
-  }).sort(function(a,b){ return (a.title||'').localeCompare(b.title||'', 'fi'); });
+  });
+
+  // If the search matches a series, sort series matches by part number
+  var seriesMatch = searchQuery && result.length > 0 &&
+    result.some(function(b) { return (b.series||'').toLowerCase().includes(searchQuery); });
+
+  if (seriesMatch) {
+    result.sort(function(a, b) {
+      var aSer = (a.series||'').toLowerCase();
+      var bSer = (b.series||'').toLowerCase();
+      var aHit = aSer.includes(searchQuery);
+      var bHit = bSer.includes(searchQuery);
+      // Series matches come first
+      if (aHit && !bHit) return -1;
+      if (!aHit && bHit) return 1;
+      // Both in series: sort by series name, then part number
+      if (aHit && bHit) {
+        if (aSer !== bSer) return aSer.localeCompare(bSer, 'fi');
+        var aNum = parseInt(a.seriesNum) || 0;
+        var bNum = parseInt(b.seriesNum) || 0;
+        return aNum - bNum;
+      }
+      // Neither in series: alphabetical by title
+      return (a.title||'').localeCompare(b.title||'', 'fi');
+    });
+  } else {
+    result.sort(function(a, b) { return (a.title||'').localeCompare(b.title||'', 'fi'); });
+  }
+
+  return result;
 }
 
 
@@ -1142,9 +1175,25 @@ function render() {
     return;
   }
   updateAuthorSuggestions();
+  var lastSeries = null;
+  var showSeriesHeaders = searchQuery && filtered.some(function(b) { return (b.series||'').toLowerCase().includes(searchQuery); });
   list.innerHTML = filtered.map(function(b) {
     var extraStr = fmtExtra(b.extra, b.status);
-    return '<div class="book-item">' +
+    var seriesHeader = '';
+    if (showSeriesHeaders) {
+      var thisSeries = (b.series||'').toLowerCase().includes(searchQuery) ? b.series : null;
+      if (thisSeries && thisSeries !== lastSeries) {
+        seriesHeader = '<div class="series-header">' + esc(thisSeries) + ' <span class="series-header-count">(' +
+          filtered.filter(function(x){ return x.series === thisSeries; }).length + ' osaa)</span></div>';
+        lastSeries = thisSeries;
+      } else if (!thisSeries && lastSeries !== '__other__') {
+        if (filtered.some(function(x){ return (x.series||'').toLowerCase().includes(searchQuery); })) {
+          seriesHeader = '<div class="series-header series-header-other">Muut tulokset</div>';
+        }
+        lastSeries = '__other__';
+      }
+    }
+    return seriesHeader + '<div class="book-item">' +
       '<div class="book-spine ' + b.status + '"></div>' +
       '<div class="book-body">' +
         '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +

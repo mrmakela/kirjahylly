@@ -474,6 +474,16 @@ html.dark {
         <div class="filter-dd-chips" id="authorChips"></div>
       </div>
     </div>
+    <div class="filter-dd-wrap" id="seriesWrap">
+      <button class="filter-dd-btn" id="seriesBtn" onclick="toggleFilterDd('series')">
+        <span id="seriesLabel">Sarja</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,6 8,10 12,6"/></svg>
+      </button>
+      <div class="filter-dd-panel" id="seriesPanel" style="display:none;">
+        <input class="filter-dd-search" id="seriesSearchInput" type="text" placeholder="Hae sarjaa..." autocomplete="off" oninput="onSeriesSearch(this.value)" />
+        <div class="filter-dd-chips" id="seriesChips"></div>
+      </div>
+    </div>
     <span class="result-count" id="resultCount"></span>
   </div>
   <div class="sum-row" id="sumRow"></div>
@@ -863,7 +873,7 @@ function deleteBook(id) {
 const LABELS = { luettu:'Luettu', kuunneltu:'Kuunneltu', kesken:'Kesken', haluaa:'Haluaa lukea' };
 const VALID_STATUS = ['luettu','kuunneltu','kesken','haluaa'];
 
-let books = [], currentFilter = 'kaikki', currentYear = null, currentAuthor = null, searchQuery = '', authorSearchQuery = '';
+let books = [], currentFilter = 'kaikki', currentYear = null, currentAuthor = null, currentSeries = null, searchQuery = '', authorSearchQuery = '', seriesSearchQuery = '';
 let scriptUrl = '', editingId = null, pendingOps = [], pendingBook = null;
 
 /* ── extra field helpers ──
@@ -953,10 +963,12 @@ function init() {
     var fb = document.getElementById('statusWrap');
     var fy = document.getElementById('yearWrap');
     var fa = document.getElementById('authorWrap');
+    var fs = document.getElementById('seriesWrap');
     if (openFilterDd && fb && fy && fa &&
-        !fb.contains(e.target) && !fy.contains(e.target) && !fa.contains(e.target)) {
+        !fb.contains(e.target) && !fy.contains(e.target) && !fa.contains(e.target) && !fs.contains(e.target)) {
       openFilterDd = null;
       authorSearchQuery = '';
+      seriesSearchQuery = '';
       renderAllFilters();
     }
 
@@ -1106,6 +1118,7 @@ function getFiltered() {
       if (!m || parseInt(m[1]) !== currentYear) return false;
     }
     if (currentAuthor && (b.author || '') !== currentAuthor) return false;
+    if (currentSeries && (b.series || '') !== currentSeries) return false;
     if (!searchQuery) return true;
     return (b.title||'').toLowerCase().includes(searchQuery) ||
            (b.author||'').toLowerCase().includes(searchQuery) ||
@@ -1175,14 +1188,14 @@ function render() {
   // Result count
   document.getElementById('resultCount').textContent =
     searchQuery ? filtered.length + ' tulosta' :
-    (currentFilter !== 'kaikki' || currentYear || currentAuthor) ? filtered.length + ' kirjaa' : '';
+    (currentFilter !== 'kaikki' || currentYear || currentAuthor || currentSeries) ? filtered.length + ' kirjaa' : '';
 
   // Book list
   var list = document.getElementById('bookList');
   if (!filtered.length) {
     list.innerHTML = '<div class="empty"><div class="empty-title">' +
       (searchQuery ? 'Ei tuloksia haulle "' + esc(searchQuery) + '"' :
-       (currentFilter !== 'kaikki' || currentYear || currentAuthor) ? 'Ei kirjoja tässä suodatuksessa' : 'Hylly on tyhjä') +
+       (currentFilter !== 'kaikki' || currentYear || currentAuthor || currentSeries) ? 'Ei kirjoja tässä suodatuksessa' : 'Hylly on tyhjä') +
       '</div><div class="empty-sub">' +
       (searchQuery ? 'Kokeile eri hakusanaa.' : 'Lisää ensimmäinen kirja tai tuo CSV/JSON Työkalut-valikosta.') +
       '</div></div>';
@@ -1239,13 +1252,24 @@ function toggleFilterDd(name) {
   openFilterDd = (openFilterDd === name) ? null : name;
   if (openFilterDd !== 'author') {
     authorSearchQuery = '';
-    var inp = document.getElementById('authorSearchInput');
-    if (inp) inp.value = '';
+    var ainp = document.getElementById('authorSearchInput');
+    if (ainp) ainp.value = '';
+  }
+  if (openFilterDd !== 'series') {
+    seriesSearchQuery = '';
+    var sinp = document.getElementById('seriesSearchInput');
+    if (sinp) sinp.value = '';
   }
   renderAllFilters();
   if (openFilterDd === 'author') {
     setTimeout(function() {
       var inp = document.getElementById('authorSearchInput');
+      if (inp) inp.focus();
+    }, 30);
+  }
+  if (openFilterDd === 'series') {
+    setTimeout(function() {
+      var inp = document.getElementById('seriesSearchInput');
       if (inp) inp.focus();
     }, 30);
   }
@@ -1255,6 +1279,7 @@ function renderAllFilters() {
   renderStatusFilter();
   renderYearFilter();
   renderAuthorFilter();
+  renderSeriesFilter();
 }
 
 function renderStatusFilter() {
@@ -1437,6 +1462,117 @@ function onAuthorSearch(val) {
   var filtered = getFiltered();
   document.getElementById('resultCount').textContent =
     filtered.length + ' kirjaa';
+  var list = document.getElementById('bookList');
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-title">Ei kirjoja tässä suodatuksessa</div></div>';
+    return;
+  }
+  list.innerHTML = filtered.map(function(b) {
+    var extraStr = fmtExtra(b.extra, b.status);
+    return '<div class="book-item">' +
+      '<div class="book-spine ' + b.status + '"></div>' +
+      '<div class="book-body">' +
+        '<div class="book-title">' + highlight(b.title, searchQuery) + '</div>' +
+        (b.author ? '<div class="book-author">' + highlight(b.author, searchQuery) + '</div>' : '') +
+        '<div class="book-footer">' +
+          '<span class="status-tag ' + b.status + '">' + LABELS[b.status] + '</span>' +
+          (b.date ? '<span class="book-date">' + fmtDate(b.date) + '</span>' : '') +
+          (b.series ? '<span class="book-series">' + esc(b.series) + (b.seriesNum ? ' ' + b.seriesNum : '') + '</span>' : '') +
+          (extraStr ? '<span class="book-extra">' + esc(extraStr) + '</span>' : '') +
+        '</div>' +
+        (b.notes ? '<div class="book-notes">' + highlight(b.notes, searchQuery) + '</div>' : '') +
+      '</div>' +
+      '<div class="book-actions">' +
+        '<button class="icon-btn" title="Muokkaa" onclick="startEdit(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg></button>' +
+        '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+
+function renderSeriesFilter() {
+  var btn = document.getElementById('seriesBtn');
+  var panel = document.getElementById('seriesPanel');
+  var label = document.getElementById('seriesLabel');
+  if (!btn) return;
+
+  var seriesCounts = {};
+  books.forEach(function(b) {
+    if (b.series) seriesCounts[b.series] = (seriesCounts[b.series] || 0) + 1;
+  });
+  var seriesList = Object.keys(seriesCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
+
+  var hasSeries = seriesList.length > 0;
+  btn.style.display = hasSeries ? '' : 'none';
+  if (!hasSeries) { panel.style.display = 'none'; return; }
+
+  var isOpen = openFilterDd === 'series';
+  label.textContent = currentSeries ? currentSeries : 'Sarja';
+  btn.classList.toggle('has-value', !!currentSeries);
+  btn.classList.toggle('open', isOpen);
+  panel.style.display = isOpen ? 'block' : 'none';
+
+  if (!isOpen) return;
+
+  renderSeriesChips(seriesCounts, seriesList);
+}
+
+function renderSeriesChips(seriesCounts, seriesList) {
+  var chips = document.getElementById('seriesChips');
+  if (!chips) return;
+
+  var filtered = seriesList.filter(function(s) {
+    return !seriesSearchQuery || s.toLowerCase().includes(seriesSearchQuery.toLowerCase());
+  });
+
+  var items = '';
+  if (currentSeries) {
+    items += '<div class="filter-dd-item clear" data-series="">× Tyhjennä</div><div class="filter-dd-sep"></div>';
+  }
+  if (filtered.length === 0) {
+    items += '<div class="filter-dd-item" style="color:var(--text-3);cursor:default;">Ei tuloksia</div>';
+  } else {
+    filtered.forEach(function(s) {
+      var cls = 'filter-dd-item' + (currentSeries === s ? ' active' : '');
+      items += '<div class="' + cls + '" data-series="' + esc(s) + '">' +
+        '<span>' + esc(s) + '</span><span class="filter-dd-count">' + seriesCounts[s] + '</span>' +
+      '</div>';
+    });
+  }
+  chips.innerHTML = items;
+  chips.querySelectorAll('.filter-dd-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var v = el.getAttribute('data-series');
+      currentSeries = (v === null || v === '' || currentSeries === v) ? null : v;
+      seriesSearchQuery = '';
+      openFilterDd = null;
+      var inp = document.getElementById('seriesSearchInput');
+      if (inp) inp.value = '';
+      render();
+    });
+  });
+}
+
+function onSeriesSearch(val) {
+  seriesSearchQuery = val;
+  var seriesCounts = {};
+  books.forEach(function(b) {
+    if (b.series) seriesCounts[b.series] = (seriesCounts[b.series] || 0) + 1;
+  });
+  var seriesList = Object.keys(seriesCounts).sort(function(a, b) { return a.localeCompare(b, 'fi'); });
+  var matches = seriesList.filter(function(s) {
+    return s.toLowerCase().includes(val.toLowerCase());
+  });
+  if (matches.length === 1) {
+    currentSeries = matches[0];
+  } else if (currentSeries && !matches.includes(currentSeries)) {
+    currentSeries = null;
+  }
+  renderSeriesChips(seriesCounts, seriesList);
+  // Update book list without touching filter UI
+  var filtered = getFiltered();
+  document.getElementById('resultCount').textContent = filtered.length + ' kirjaa';
   var list = document.getElementById('bookList');
   if (!filtered.length) {
     list.innerHTML = '<div class="empty"><div class="empty-title">Ei kirjoja tässä suodatuksessa</div></div>';

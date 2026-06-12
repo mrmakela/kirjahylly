@@ -547,7 +547,7 @@ html.dark {
 <div class="modal-wrap" id="importCSVModal" style="display:none;" onclick="bgClose(event,'importCSVModal')">
   <div class="modal">
     <h3>Tuo CSV-tiedosto</h3>
-    <p class="modal-sub">Otsikkorivi: <code>title,author,status,date,extra,notes</code><br>
+    <p class="modal-sub">Otsikkorivi: <code>title,author,status,date,extra,series,seriesNum,notes</code><br>
     Tila-arvot: <code>luettu</code>, <code>kuunneltu</code>, <code>kesken</code>, <code>haluaa</code><br>
     Duplikaatit (sama nimi + tekijä) ohitetaan automaattisesti.</p>
     <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="doDragOver(event)" ondragleave="doDragLeave()" ondrop="doDrop(event)">
@@ -820,7 +820,7 @@ function deleteBook(id) {
       <div class="help-section">
         <h4>CSV-tiedoston muoto</h4>
         <div style="font-family:monospace;font-size:12px;background:#ededec;padding:10px 12px;border-radius:8px;color:#2A5CBF;line-height:1.7;">
-          title,author,status,date,extra,notes<br>
+          title,author,status,date,extra,series,seriesNum,notes<br>
           Taikatalvi,Johanna Sinisalo,luettu,2024-03-15,320,Loistava kirja<br>
           Tuntematon sotilas,Väinö Linna,luettu,2023-11-01,600,<br>
           Dyyni,,haluaa,,,Pitää lukea
@@ -1595,13 +1595,14 @@ function bookToCSVRow(b) {
     return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
   }).join(',');
 }
-function toCSV(arr) { return ['title,author,status,date,extra,notes'].concat(arr.map(bookToCSVRow)).join('\n'); }
+function toCSV(arr) { return ['title,author,status,date,extra,series,seriesNum,notes'].concat(arr.map(bookToCSVRow)).join('\n'); }
 function parseCSV(text) {
   var lines = text.trim().split(/\r?\n/);
   if (lines.length < 2) return {books:[], errors:['Ei dataa.']};
   var hdr = lines[0].split(',').map(function(h){return h.trim().toLowerCase();});
   var ti=hdr.indexOf('title'), ai=hdr.indexOf('author'), si=hdr.indexOf('status'),
-      di=hdr.indexOf('date'), ei=hdr.indexOf('extra'), ni=hdr.indexOf('notes');
+      di=hdr.indexOf('date'), ei=hdr.indexOf('extra'), ni=hdr.indexOf('notes'),
+      sei=hdr.indexOf('series'), sni=hdr.indexOf('seriesnum');
   if (ti===-1) return {books:[], errors:['Sarake "title" puuttuu.']};
   var result=[], errors=[];
   for (var i=1; i<lines.length; i++) {
@@ -1614,6 +1615,7 @@ function parseCSV(text) {
     result.push({ id:Date.now().toString()+i, title:title,
       author:ai!==-1?c[ai]||'':'', status:status,
       date:di!==-1?c[di]||'':'', extra:ei!==-1?c[ei]||'':'',
+      series:sei!==-1?c[sei]||'':'', seriesNum:sni!==-1?c[sni]||'':'',
       notes:ni!==-1?c[ni]||'':'', added:new Date().toISOString() });
   }
   return {books:result, errors:errors};

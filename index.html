@@ -122,6 +122,7 @@ html.dark {
     .tools-btn.open svg { transform: rotate(180deg); }
     .tools-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--bg-card); border: 0.5px solid var(--border-2); border-radius: 10px; box-shadow: 0 4px 16px var(--shadow-md); min-width: 200px; z-index: 50; padding: 6px; display: none; }
     .tools-menu.open { display: block; }
+    .tools-version { font-size: 11px; color: var(--text-3); text-align: center; padding: 6px 10px 4px; }
     .tools-section { font-size: 10px; color: var(--text-3); font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 10px 4px; }
     .tools-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--text); padding: 7px 10px; border-radius: 7px; cursor: pointer; width: 100%; background: none; border: none; font-family: inherit; text-align: left; }
     .tools-item:hover { background: var(--bg-hover); }
@@ -401,6 +402,8 @@ html.dark {
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 11v-1"/><path d="M8 9c0-1.5 2-2 2-3.5a2 2 0 00-4 0"/></svg>
               Ohje
             </button>
+            <div class="tools-divider"></div>
+            <div class="tools-version">Kirjahylly v0.9</div>
           </div>
         </div>
         <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Vaihda teema">
@@ -547,7 +550,7 @@ html.dark {
 <div class="modal-wrap" id="importCSVModal" style="display:none;" onclick="bgClose(event,'importCSVModal')">
   <div class="modal">
     <h3>Tuo CSV-tiedosto</h3>
-    <p class="modal-sub">Otsikkorivi: <code>title,author,status,date,extra,series,seriesNum,notes</code><br>
+    <p class="modal-sub">Otsikkorivi: <code>title;author;status;date;extra;series;seriesNum;notes</code><br>
     Tila-arvot: <code>luettu</code>, <code>kuunneltu</code>, <code>kesken</code>, <code>haluaa</code><br>
     Duplikaatit (sama nimi + tekijä) ohitetaan automaattisesti.</p>
     <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="doDragOver(event)" ondragleave="doDragLeave()" ondrop="doDrop(event)">
@@ -820,7 +823,7 @@ function deleteBook(id) {
       <div class="help-section">
         <h4>CSV-tiedoston muoto</h4>
         <div style="font-family:monospace;font-size:12px;background:#ededec;padding:10px 12px;border-radius:8px;color:#2A5CBF;line-height:1.7;">
-          title,author,status,date,extra,series,seriesNum,notes<br>
+          title;author;status;date;extra;series;seriesNum;notes<br>
           Taikatalvi,Johanna Sinisalo,luettu,2024-03-15,320,Loistava kirja<br>
           Tuntematon sotilas,Väinö Linna,luettu,2023-11-01,600,<br>
           Dyyni,,haluaa,,,Pitää lukea
@@ -1592,14 +1595,16 @@ function bookToCSVRow(b) {
   var fields = [b.title||'', b.author||'', b.status||'', b.date||'', b.extra||'', b.series||'', b.seriesNum||'', b.notes||''];
   return fields.map(function(v) {
     var s = String(v);
-    return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
-  }).join(',');
+    return (s.includes(';') || s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
+  }).join(';');
 }
-function toCSV(arr) { return ['title,author,status,date,extra,series,seriesNum,notes'].concat(arr.map(bookToCSVRow)).join('\n'); }
+function toCSV(arr) { return ['title;author;status;date;extra;series;seriesNum;notes'].concat(arr.map(bookToCSVRow)).join('\n'); }
 function parseCSV(text) {
   var lines = text.trim().split(/\r?\n/);
   if (lines.length < 2) return {books:[], errors:['Ei dataa.']};
-  var hdr = lines[0].split(',').map(function(h){return h.trim().toLowerCase();});
+  // Tunnista erotin: puolipiste (eurooppalainen) tai pilkku
+  var delim = (lines[0].split(';').length > lines[0].split(',').length) ? ';' : ',';
+  var hdr = lines[0].split(delim).map(function(h){return h.trim().toLowerCase();});
   var ti=hdr.indexOf('title'), ai=hdr.indexOf('author'), si=hdr.indexOf('status'),
       di=hdr.indexOf('date'), ei=hdr.indexOf('extra'), ni=hdr.indexOf('notes'),
       sei=hdr.indexOf('series'), sni=hdr.indexOf('seriesnum');
@@ -1607,7 +1612,7 @@ function parseCSV(text) {
   var result=[], errors=[];
   for (var i=1; i<lines.length; i++) {
     if (!lines[i].trim()) continue;
-    var c = splitRow(lines[i]);
+    var c = splitRow(lines[i], delim);
     var title = c[ti]||'';
     if (!title) { errors.push('Rivi '+(i+1)+': nimi puuttuu.'); continue; }
     var status = si!==-1 ? (c[si]||'').toLowerCase() : 'haluaa';
@@ -1620,12 +1625,13 @@ function parseCSV(text) {
   }
   return {books:result, errors:errors};
 }
-function splitRow(row) {
+function splitRow(row, delim) {
+  delim = delim || ',';
   var cols=[], cur='', inQ=false;
   for (var i=0; i<row.length; i++) {
     var c=row[i];
     if (c==='"') { if (inQ && row[i+1]==='"') { cur+='"'; i++; } else inQ=!inQ; }
-    else if (c===',' && !inQ) { cols.push(cur); cur=''; }
+    else if (c===delim && !inQ) { cols.push(cur); cur=''; }
     else cur+=c;
   }
   cols.push(cur); return cols;

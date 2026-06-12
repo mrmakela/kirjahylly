@@ -371,7 +371,7 @@ html.dark {
           <div class="tools-menu" id="toolsMenu">
             <div class="tools-section">Tuo</div>
             <button class="tools-item" onclick="openImportCSV();closeTools()">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12V4M5 7l3-3 3 3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
               Tuo CSV-tiedosto
             </button>
             <button class="tools-item" onclick="openImportJSON();closeTools()">
@@ -381,7 +381,7 @@ html.dark {
             <div class="tools-divider"></div>
             <div class="tools-section">Vie</div>
             <button class="tools-item" onclick="exportCSV();closeTools()">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12V4M5 7l3-3 3 3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
               Lataa CSV
             </button>
             <button class="tools-item" onclick="exportJSON();closeTools()">
@@ -1781,6 +1781,44 @@ function applyStoredTheme() {
     var meta = document.getElementById('themeColorMeta');
     if (meta) meta.setAttribute('content', '#22222a');
   }
+}
+
+function openDupFinder() {
+  var counts = {};
+  books.forEach(function(b) {
+    var key = b.title.trim().toLowerCase();
+    if (!counts[key]) counts[key] = [];
+    counts[key].push(b);
+  });
+  var dups = Object.keys(counts).map(function(k){ return counts[k]; }).filter(function(g) { return g.length > 1; });
+  var sub = document.getElementById('dupFinderSub');
+  var list = document.getElementById('dupFinderList');
+  if (!dups.length) {
+    sub.textContent = 'Duplikaatteja ei löydy — kaikki kirjat ovat uniikkeja.';
+    list.innerHTML = '';
+  } else {
+    sub.textContent = 'Löydetty ' + dups.length + ' kirjaa joilla on useampi merkintä:';
+    list.innerHTML = dups.map(function(group) {
+      var rows = group.map(function(b) {
+        var dateStr = b.date ? fmtDate(b.date) : 'ei päivämäärää';
+        return '<div class="dup-book-row">' +
+          '<div class="dup-spine ' + b.status + '"></div>' +
+          '<div class="dup-info">' +
+            '<div>' + esc(b.title) + (b.author ? ' <span style="color:var(--text-3)">— ' + esc(b.author) + '</span>' : '') + '</div>' +
+            '<div class="dup-status">' + LABELS[b.status] + ' · ' + dateStr + '</div>' +
+          '</div>' +
+          '<button class="icon-btn" title="Muokkaa" onclick="closeModal(\'dupFinderModal\');startEdit(\'' + b.id + '\')">' +
+            '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3L11 2z"/></svg>' +
+          '</button>' +
+          '<button class="icon-btn" title="Poista" onclick="deleteBook(\'' + b.id + '\');openDupFinder()">' +
+            '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,5 13,5"/><path d="M5 5V3h6v2M6 8v5M10 8v5"/></svg>' +
+          '</button>' +
+        '</div>';
+      }).join('');
+      return '<div class="dup-group"><div class="dup-group-title">' + esc(group[0].title) + ' (' + group.length + ' merkintää)</div>' + rows + '</div>';
+    }).join('');
+  }
+  document.getElementById('dupFinderModal').style.display = 'flex';
 }
 
 function openHelp() {

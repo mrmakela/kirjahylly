@@ -1008,6 +1008,17 @@ async function sheetsGet(params) {
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
 }
+function normalizeBook(b) {
+  // Korjaa mahdolliset pienikirjaimiset kenttänimet vanhasta datasta
+  if (b.seriesnum !== undefined && b.seriesNum === undefined) {
+    b.seriesNum = b.seriesnum;
+    delete b.seriesnum;
+  }
+  if (b.seriesNum === undefined) b.seriesNum = '';
+  if (b.series === undefined) b.series = '';
+  return b;
+}
+
 async function syncNow() {
   if (!scriptUrl) return;
   setSyncStatus('Synkronoidaan...');
@@ -1025,7 +1036,7 @@ async function syncNow() {
         setSyncStatus('Paikalliset kirjat palautettu Sheetsiin ' + new Date().toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}));
         updateConn('ok', 'Sheets yhdistetty');
       } else {
-        books = data.books; persist(); render();
+        books = data.books.map(normalizeBook); persist(); render();
         setSyncStatus('Synkronoitu ' + new Date().toLocaleTimeString('fi-FI', {hour:'2-digit',minute:'2-digit'}));
         updateConn('ok', 'Sheets yhdistetty');
       }

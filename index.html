@@ -403,7 +403,7 @@ html.dark {
               Ohje
             </button>
             <div class="tools-divider"></div>
-            <div class="tools-version">Kirjahylly v0.9</div>
+            <div class="tools-version">Kirjahylly v0.9.1</div>
           </div>
         </div>
         <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Vaihda teema">
@@ -1125,6 +1125,17 @@ function getFiltered() {
            (b.series||'').toLowerCase().includes(searchQuery) ||
            (b.notes||'').toLowerCase().includes(searchQuery);
   });
+
+  // If the series filter is active, sort by part number within the series
+  if (currentSeries) {
+    result.sort(function(a, b) {
+      var aNum = parseInt(a.seriesNum) || 0;
+      var bNum = parseInt(b.seriesNum) || 0;
+      if (aNum !== bNum) return aNum - bNum;
+      return (a.title||'').localeCompare(b.title||'', 'fi');
+    });
+    return result;
+  }
 
   // If the search matches a series, sort series matches by part number
   var seriesMatch = searchQuery && result.length > 0 &&
